@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.20)  28 DEC 2022 17:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.20)  28 DEC 2022 21:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -948,7 +948,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 
 ]
 LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
-197.
+199.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -957,34 +957,34 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-97.
+99.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-197.
+199.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-197.
+199.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 197.
+(Font)              <10.95> on input line 199.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 197.
+(Font)              <8> on input line 199.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 197.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 197
+(Font)              <6> on input line 199.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 199
 .
 (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 197
+LaTeX Font Info:    Trying to load font information for U+msb on input line 199
 .
 (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -992,27 +992,27 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 197.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 199.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <8> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 197.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 199.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 197.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 199.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 197.
+(Font)              <10> on input line 199.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 197.
+(Font)              <7> on input line 199.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 197.
+(Font)              <5> on input line 199.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 197.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 199.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 197.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 199.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 197.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 199.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 197.
+(Font)              <9> on input line 199.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 197.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 199.
 [4
 
 ] [5
@@ -1020,6 +1020,8 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
 ] [6
 
 ] [7
+
+] [8
 
 ]
 \openout4 = `lec01.vrb'.
@@ -1029,25 +1031,25 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 9
 .
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)) [8
+)) [9
 
-] [9
+] [10
 
 ]
 \openout4 = `lec01.vrb'.
 
-(./lec01.vrb) [10
+(./lec01.vrb) [11
 
 ]
 \openout4 = `lec01.vrb'.
 
 (./lec01.vrb
-<bind2.png, id=87, 220.825pt x 81.30376pt>
+<bind2.png, id=98, 220.825pt x 81.30376pt>
 File: bind2.png Graphic file (type png)
 <use bind2.png>
 Package pdftex.def Info: bind2.png  used on input line 27.
 (pdftex.def)             Requested size: 184.38315pt x 67.88652pt.
-) [11
+) [12
 
  <./bind2.png>]
 \openout4 = `lec01.vrb'.
@@ -1059,40 +1061,26 @@ LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ))
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 393.
-[12
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 433.
+[13
 
 ]
 \openout4 = `lec01.vrb'.
 
 (./lec01.vrb
-<bindnew.png, id=104, 200.75pt x 107.40125pt>
+<bindnew.png, id=116, 200.75pt x 107.40125pt>
 File: bindnew.png Graphic file (type png)
 <use bindnew.png>
 Package pdftex.def Info: bindnew.png  used on input line 38.
 (pdftex.def)             Requested size: 122.9168pt x 65.76047pt.
-) [13
+) [14
 
  <./bindnew.png>]
 \openout4 = `lec01.vrb'.
 
 (./lec01.vrb
 Overfull \hbox (1283.4555pt too wide) in paragraph at lines 31--31
-[]\T1/lmtt/m/n/10 ## tracemem[0x7fe200b7b788 -> 0x7fe200c41368]: eval eval eval
-_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_c
-all <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block proces
-s_group.block process_group withCallingHandlers process_file <Anonymous> <Anony
-mous>[] 
- []
-
-) [14
-
-]
-\openout4 = `lec01.vrb'.
-
-(./lec01.vrb
-Overfull \hbox (1283.4555pt too wide) in paragraph at lines 43--43
-[]\T1/lmtt/m/n/10 ## tracemem[0x7fe1f2710fd8 -> 0x7fe1f27ba108]: eval eval eval
+[]\T1/lmtt/m/n/10 ## tracemem[0x7f84ca8aae88 -> 0x7f84dbc40e68]: eval eval eval
 _with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_c
 all <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block proces
 s_group.block process_group withCallingHandlers process_file <Anonymous> <Anony
@@ -1105,51 +1093,65 @@ mous>[]
 \openout4 = `lec01.vrb'.
 
 (./lec01.vrb
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <9> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 14.
+Overfull \hbox (1283.4555pt too wide) in paragraph at lines 43--43
+[]\T1/lmtt/m/n/10 ## tracemem[0x7f84dc70b868 -> 0x7f84ea994c38]: eval eval eval
+_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_c
+all <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block proces
+s_group.block process_group withCallingHandlers process_file <Anonymous> <Anony
+mous>[] 
+ []
+
 ) [16
 
 ]
 \openout4 = `lec01.vrb'.
 
-(./lec01.vrb) [17
+(./lec01.vrb
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <9> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 14.
+) [17
+
+]
+\openout4 = `lec01.vrb'.
+
+(./lec01.vrb) [18
 
 ]
 \openout4 = `lec01.vrb'.
 
 (./lec01.vrb
-<listbind2.png, id=141, 190.7125pt x 113.42375pt>
+<listbind2.png, id=153, 190.7125pt x 113.42375pt>
 File: listbind2.png Graphic file (type png)
 <use listbind2.png>
 Package pdftex.def Info: listbind2.png  used on input line 13.
 (pdftex.def)             Requested size: 92.18698pt x 54.82698pt.
-<listbindnew.png, id=142, 216.81pt x 158.5925pt>
+<listbindnew.png, id=154, 216.81pt x 158.5925pt>
 File: listbindnew.png Graphic file (type png)
 <use listbindnew.png>
 Package pdftex.def Info: listbindnew.png  used on input line 25.
 (pdftex.def)             Requested size: 92.18768pt x 67.43358pt.
-) [18
+) [19
 
  <./listbind2.png> <./listbindnew.png>]
 \openout4 = `lec01.vrb'.
 
 (./lec01.vrb)
-Overfull \vbox (9.8779pt too high) detected at line 678
+Overfull \vbox (9.8779pt too high) detected at line 718
  []
 
-[19
+[20
 
 ]
 \openout4 = `lec01.vrb'.
 
-(./lec01.vrb) [20
+(./lec01.vrb) [21
 
 ]
 \openout4 = `lec01.vrb'.
 
 (./lec01.vrb
 Overfull \hbox (1285.03204pt too wide) in paragraph at lines 41--41
-[]\T1/lmtt/m/n/9 ## tracemem[0x7fe1e1352ac8 -> 0x7fe1e176cc60]: as.list.data.fr
+[]\T1/lmtt/m/n/9 ## tracemem[0x7f84dc468d68 -> 0x7f84dd049168]: as.list.data.fr
 ame as.list lapply eval eval eval_with_user_handlers withVisible withCallingHan
 dlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir e
 ng_r block_exec call_block process_group.block process_group withCallingHandler
@@ -1158,7 +1160,7 @@ s process_file <Anonymous> <Anonymous>[]
 
 
 Overfull \hbox (1398.43182pt too wide) in paragraph at lines 41--41
-[]\T1/lmtt/m/n/9 ## tracemem[0x7fe1f1047ff0 -> 0x7fe1f1048fd0]: sort.int sort.d
+[]\T1/lmtt/m/n/9 ## tracemem[0x7f84eb026730 -> 0x7f84eb033460]: sort.int sort.d
 efault sort mean median.default FUN lapply eval eval eval_with_user_handlers wi
 thVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evalua
 te in_dir in_input_dir eng_r block_exec call_block process_group.block process_
@@ -1167,7 +1169,7 @@ group withCallingHandlers process_file <Anonymous> <Anonymous>[]
 
 
 Overfull \hbox (1124.38235pt too wide) in paragraph at lines 52--52
-[]\T1/lmtt/m/n/9 ## tracemem[0x7fe1e1352ac8 -> 0x7fe1e126fde0]: eval eval eval_
+[]\T1/lmtt/m/n/9 ## tracemem[0x7f84dc468d68 -> 0x7f84dc5b2550]: eval eval eval_
 with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_ca
 ll <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process
 _group.block process_group withCallingHandlers process_file <Anonymous> <Anonym
@@ -1176,34 +1178,11 @@ ous>[]
 
 
 Overfull \hbox (1223.60716pt too wide) in paragraph at lines 52--52
-[]\T1/lmtt/m/n/9 ## tracemem[0x7fe1e126fde0 -> 0x7fe1e15990e8]: [[<-.data.frame
+[]\T1/lmtt/m/n/9 ## tracemem[0x7f84dc5b2550 -> 0x7f84dc5ab470]: [[<-.data.frame
  [[<- eval eval eval_with_user_handlers withVisible withCallingHandlers handle 
 timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_ex
 ec call_block process_group.block process_group withCallingHandlers process_fil
 e <Anonymous> <Anonymous>[] 
- []
-
-) [21
-
-]
-\openout4 = `lec01.vrb'.
-
-(./lec01.vrb
-Overfull \hbox (1398.43182pt too wide) in paragraph at lines 34--34
-[]\T1/lmtt/m/n/9 ## tracemem[0x7fe1f1058340 -> 0x7fe1f1058690]: sort.int sort.d
-efault sort mean median.default FUN lapply eval eval eval_with_user_handlers wi
-thVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evalua
-te in_dir in_input_dir eng_r block_exec call_block process_group.block process_
-group withCallingHandlers process_file <Anonymous> <Anonymous>[] 
- []
-
-
-Overfull \hbox (1124.38235pt too wide) in paragraph at lines 44--44
-[]\T1/lmtt/m/n/9 ## tracemem[0x7fe1e17f6d68 -> 0x7fe1e1690cb8]: eval eval eval_
-with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_ca
-ll <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process
-_group.block process_group withCallingHandlers process_file <Anonymous> <Anonym
-ous>[] 
  []
 
 ) [22
@@ -1212,8 +1191,17 @@ ous>[]
 \openout4 = `lec01.vrb'.
 
 (./lec01.vrb
-Overfull \hbox (1124.38235pt too wide) in paragraph at lines 40--40
-[]\T1/lmtt/m/n/9 ## tracemem[0x7fe1f2742818 -> 0x7fe1f2693608]: eval eval eval_
+Overfull \hbox (1398.43182pt too wide) in paragraph at lines 34--34
+[]\T1/lmtt/m/n/9 ## tracemem[0x7f84eb0291a0 -> 0x7f84eb01ad90]: sort.int sort.d
+efault sort mean median.default FUN lapply eval eval eval_with_user_handlers wi
+thVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evalua
+te in_dir in_input_dir eng_r block_exec call_block process_group.block process_
+group withCallingHandlers process_file <Anonymous> <Anonymous>[] 
+ []
+
+
+Overfull \hbox (1124.38235pt too wide) in paragraph at lines 44--44
+[]\T1/lmtt/m/n/9 ## tracemem[0x7f84dbd44ee0 -> 0x7f84db86b668]: eval eval eval_
 with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_ca
 ll <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process
 _group.block process_group withCallingHandlers process_file <Anonymous> <Anonym
@@ -1226,24 +1214,38 @@ ous>[]
 \openout4 = `lec01.vrb'.
 
 (./lec01.vrb
-<env1.png, id=183, 260.975pt x 202.7575pt>
+Overfull \hbox (1124.38235pt too wide) in paragraph at lines 40--40
+[]\T1/lmtt/m/n/9 ## tracemem[0x7f84ead920a8 -> 0x7f84dc727b58]: eval eval eval_
+with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_ca
+ll <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process
+_group.block process_group withCallingHandlers process_file <Anonymous> <Anonym
+ous>[] 
+ []
+
+) [24
+
+]
+\openout4 = `lec01.vrb'.
+
+(./lec01.vrb
+<env1.png, id=194, 260.975pt x 202.7575pt>
 File: env1.png Graphic file (type png)
 <use env1.png>
 Package pdftex.def Info: env1.png  used on input line 3.
 (pdftex.def)             Requested size: 122.91312pt x 95.49403pt.
-<env2.png, id=184, 293.095pt x 200.75pt>
+<env2.png, id=195, 293.095pt x 200.75pt>
 File: env2.png Graphic file (type png)
 <use env2.png>
 Package pdftex.def Info: env2.png  used on input line 4.
 (pdftex.def)             Requested size: 122.91121pt x 84.18576pt.
-) [24
+) [25
 
  <./env1.png> <./env2.png>]
 \openout4 = `lec01.vrb'.
 
-(./lec01.vrb) [25
+(./lec01.vrb) [26
 
-] [26
+] [27
 
 ]
 \tf@nav=\write6
@@ -1257,13 +1259,13 @@ Package pdftex.def Info: env2.png  used on input line 4.
 
 (./lec01.aux) ) 
 Here is how much of TeX's memory you used:
- 25148 strings out of 478268
- 484706 string characters out of 5846347
+ 25157 strings out of 478268
+ 484800 string characters out of 5846347
  764967 words of memory out of 5000000
- 42578 multiletter control sequences out of 15000+600000
- 558795 words of font info for 151 fonts, out of 8000000 for 9000
+ 42580 multiletter control sequences out of 15000+600000
+ 558997 words of font info for 153 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 128i,11n,122p,1002b,605s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 128i,11n,122p,1002b,618s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.en
 c}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</usr/local/
 texlive/2022/texmf-dist/fonts/type1/public/lm/lmss10.pfb></usr/local/texlive/20
@@ -1277,10 +1279,10 @@ texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt12.pfb></usr/local/texlive/20
 22/texmf-dist/fonts/type1/public/lm/lmtt9.pfb></usr/local/texlive/2022/texmf-di
 st/fonts/type1/public/lm/lmtti10.pfb></usr/local/texlive/2022/texmf-dist/fonts/
 type1/public/amsfonts/symbols/msam10.pfb>
-Output written on lec01.pdf (26 pages, 464955 bytes).
+Output written on lec01.pdf (27 pages, 470964 bytes).
 PDF statistics:
- 291 PDF objects out of 1000 (max. 8388607)
- 216 compressed objects within 3 object streams
- 77 named destinations out of 1000 (max. 500000)
+ 303 PDF objects out of 1000 (max. 8388607)
+ 227 compressed objects within 3 object streams
+ 80 named destinations out of 1000 (max. 500000)
  53337 words of extra memory for PDF output out of 61914 (max. 10000000)
 
