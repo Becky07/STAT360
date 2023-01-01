@@ -14,7 +14,7 @@ output:
 ## Course objectives
 
 - Make you R **programmers** rather than just R **users**, by 
-working through most of the book "Advanced R" by Hadley Wickham: https://adv-r.hadley.nz/index.html.Solutions to the exercises in the textbook is also available online for free: https://advanced-r-solutions.rbind.io/ 
+working through most of the book "Advanced R" by Hadley Wickham.The solutions to exercises in the textbook is also available online for free. 
 - Topics:
     - R objects: names and values
     - Basic data structures and programming.
@@ -33,10 +33,11 @@ working through most of the book "Advanced R" by Hadley Wickham: https://adv-r.h
 - Textbook and Solutions
   + Textbook: **Advanced R, 2nd ed.** By Hadley Wickham. Available online for free at https://adv-r.hadley.nz/
   + Exercise Solutions: **The Advanced R Solutions, 2nd ed.**. Also available online for free at: https://advanced-r-solutions.rbind.io/
+  
 - Evaluations
   + In-class quizzes (50%): best 5 out of 6 quizzes. 
-  + Group course project (20%).
-  + Closed-book final exam (30%).
+  + Group course project (25%).
+  + Closed-book final exam (25%).
 
 ## Getting started with R, RStudio and git
 
