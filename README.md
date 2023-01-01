@@ -1,4 +1,4 @@
-# SFUStat360
+# Stat360 - Spring 2023
 
 This is the GitHub repository for Stat 360, spring 2023 at SFU.
 The lecture notes and many of the exercises are based on the text [Advanced R](https://adv-r.hadley.nz/)
