@@ -6,8 +6,9 @@ output:
   beamer_presentation:
     includes:
       in_header: header_pagenum.tex
-    toc: true
+    toc: true 
 ---
+  
 
 # Course Objectives
 
@@ -85,6 +86,8 @@ so it pays to understand what will trigger it.
   (ii) "binds" that object to the 
 "name" `x`.
 
+- The function `lobstr::obj_addr()` allows us see the address/identifier of an object. 
+
 \small
 
 ```{r}
@@ -94,24 +97,6 @@ x <- c(1,2,3)
 ls()
 obj_addr(x) # changes every time this code chunk is run
 ```
-
-\normalsize
-
-## Binding multiple names to the same object
-
-* The following binds the name `y` to the same object
-that `x` is bound to.
-
-\small
-
-```{r}
-y <- x
-c(obj_addr(x), obj_addr(y))
-```
-
-\normalsize
-![Bind two names to the same object](bind2.png){width=60%} 
-
 
 ## Aside: Syntactic *vs* non-syntactic
 
@@ -133,11 +118,31 @@ ls()
 ```
 
 
+\normalsize
+
+## Binding multiple names to the same object
+
+* The following binds the name `y` to the same object
+that `x` is bound to.
+
+\small
+
+```{r}
+y <- x
+c(obj_addr(x), obj_addr(y))
+```
+
+\normalsize
+![Bind two names to the same object](bind2.png){width=60%} 
+
+
+
+
 
 ## Modifying causes copying
 
 * Modifying a variable causes a copy to be made, with the
-modified variable name bound to the copy.
+modified variable name bound to the copy.This is called **copy-on-modify**.
 
 \footnotesize
 
@@ -160,14 +165,14 @@ whenever a copy is made.
 ```{r}
 x <- c(1,2,3)
 tracemem(x)
-x[[2]] <- 10
+x[[2]] <- 10  # copy made
 untracemem(x)  # remove the trace
 x[[1]] <- 10
 ```
 
 ## More on `tracmem()`
 
-* As the output of  `\textcolor{blue}{`tracemem()`} suggests, 
+* As the output of  \textcolor{blue}{`tracemem()`} suggests, 
 the trace is on the object, not the name:
 
 \small

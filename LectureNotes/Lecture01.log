@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.20)  31 DEC 2022 17:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.20)  31 DEC 2022 21:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1044,43 +1044,47 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 \openout4 = `Lecture01.vrb'.
 
 (./Lecture01.vrb
-<bind2.png, id=96, 220.825pt x 81.30376pt>
-File: bind2.png Graphic file (type png)
-<use bind2.png>
-Package pdftex.def Info: bind2.png  used on input line 27.
-(pdftex.def)             Requested size: 184.38315pt x 67.88652pt.
-) [12
-
- <./bind2.png>]
-\openout4 = `Lecture01.vrb'.
-
-(./Lecture01.vrb
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
 25.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ))
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 432.
-[13
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 404.
+[12
 
 ]
+\openout4 = `Lecture01.vrb'.
+
+(./Lecture01.vrb
+<bind2.png, id=104, 220.825pt x 81.30376pt>
+File: bind2.png Graphic file (type png)
+<use bind2.png>
+Package pdftex.def Info: bind2.png  used on input line 27.
+(pdftex.def)             Requested size: 184.38315pt x 67.88652pt.
+) [13
+
+ <./bind2.png>]
 \openout4 = `Lecture01.vrb'.
 
 (./Lecture01.vrb
 <bindnew.png, id=114, 200.75pt x 107.40125pt>
 File: bindnew.png Graphic file (type png)
 <use bindnew.png>
-Package pdftex.def Info: bindnew.png  used on input line 38.
+Package pdftex.def Info: bindnew.png  used on input line 39.
 (pdftex.def)             Requested size: 122.9168pt x 65.76047pt.
-) [14
+)
+Overfull \vbox (2.48183pt too high) detected at line 478
+ []
+
+[14
 
  <./bindnew.png>]
 \openout4 = `Lecture01.vrb'.
 
 (./Lecture01.vrb
 Overfull \hbox (1283.4555pt too wide) in paragraph at lines 31--31
-[]\T1/lmtt/m/n/10 ## tracemem[0x7f98b26b3288 -> 0x7f98b34b4268]: eval eval eval
+[]\T1/lmtt/m/n/10 ## tracemem[0x7fd5f9ba0fa8 -> 0x7fd5f9a7b788]: eval eval eval
 _with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_c
 all <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block proces
 s_group.block process_group withCallingHandlers process_file <Anonymous> <Anony
@@ -1093,8 +1097,8 @@ mous>[]
 \openout4 = `Lecture01.vrb'.
 
 (./Lecture01.vrb
-Overfull \hbox (1283.4555pt too wide) in paragraph at lines 43--43
-[]\T1/lmtt/m/n/10 ## tracemem[0x7f98b30d6c58 -> 0x7f98d1d09be8]: eval eval eval
+Overfull \hbox (1283.4555pt too wide) in paragraph at lines 42--42
+[]\T1/lmtt/m/n/10 ## tracemem[0x7fd61aaa3b78 -> 0x7fd5f9a4eca8]: eval eval eval
 _with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_c
 all <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block proces
 s_group.block process_group withCallingHandlers process_file <Anonymous> <Anony
@@ -1136,7 +1140,7 @@ Package pdftex.def Info: listbindnew.png  used on input line 25.
 \openout4 = `Lecture01.vrb'.
 
 (./Lecture01.vrb)
-Overfull \vbox (9.8779pt too high) detected at line 717
+Overfull \vbox (9.8779pt too high) detected at line 720
  []
 
 [20
@@ -1151,7 +1155,7 @@ Overfull \vbox (9.8779pt too high) detected at line 717
 
 (./Lecture01.vrb
 Overfull \hbox (1285.03204pt too wide) in paragraph at lines 41--41
-[]\T1/lmtt/m/n/9 ## tracemem[0x7f98b2e57d68 -> 0x7f98b327a568]: as.list.data.fr
+[]\T1/lmtt/m/n/9 ## tracemem[0x7fd5f989cb90 -> 0x7fd5f9ccf6d0]: as.list.data.fr
 ame as.list lapply eval eval eval_with_user_handlers withVisible withCallingHan
 dlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir e
 ng_r block_exec call_block process_group.block process_group withCallingHandler
@@ -1160,7 +1164,7 @@ s process_file <Anonymous> <Anonymous>[]
 
 
 Overfull \hbox (1398.43182pt too wide) in paragraph at lines 41--41
-[]\T1/lmtt/m/n/9 ## tracemem[0x7f98d2911750 -> 0x7f98d2955e20]: sort.int sort.d
+[]\T1/lmtt/m/n/9 ## tracemem[0x7fd5f9755b20 -> 0x7fd5f9745dd0]: sort.int sort.d
 efault sort mean median.default FUN lapply eval eval eval_with_user_handlers wi
 thVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evalua
 te in_dir in_input_dir eng_r block_exec call_block process_group.block process_
@@ -1169,7 +1173,7 @@ group withCallingHandlers process_file <Anonymous> <Anonymous>[]
 
 
 Overfull \hbox (1124.38235pt too wide) in paragraph at lines 52--52
-[]\T1/lmtt/m/n/9 ## tracemem[0x7f98b2e57d68 -> 0x7f98b38f2b50]: eval eval eval_
+[]\T1/lmtt/m/n/9 ## tracemem[0x7fd5f989cb90 -> 0x7fd5fa016de8]: eval eval eval_
 with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_ca
 ll <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process
 _group.block process_group withCallingHandlers process_file <Anonymous> <Anonym
@@ -1178,7 +1182,7 @@ ous>[]
 
 
 Overfull \hbox (1223.60716pt too wide) in paragraph at lines 52--52
-[]\T1/lmtt/m/n/9 ## tracemem[0x7f98b38f2b50 -> 0x7f98b38f4a70]: [[<-.data.frame
+[]\T1/lmtt/m/n/9 ## tracemem[0x7fd5fa016de8 -> 0x7fd5fa0190f8]: [[<-.data.frame
  [[<- eval eval eval_with_user_handlers withVisible withCallingHandlers handle 
 timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_ex
 ec call_block process_group.block process_group withCallingHandlers process_fil
@@ -1192,7 +1196,7 @@ e <Anonymous> <Anonymous>[]
 
 (./Lecture01.vrb
 Overfull \hbox (1398.43182pt too wide) in paragraph at lines 34--34
-[]\T1/lmtt/m/n/9 ## tracemem[0x7f98d29398a0 -> 0x7f98d2939bf0]: sort.int sort.d
+[]\T1/lmtt/m/n/9 ## tracemem[0x7fd5f976b650 -> 0x7fd61a02f4e0]: sort.int sort.d
 efault sort mean median.default FUN lapply eval eval eval_with_user_handlers wi
 thVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evalua
 te in_dir in_input_dir eng_r block_exec call_block process_group.block process_
@@ -1201,7 +1205,7 @@ group withCallingHandlers process_file <Anonymous> <Anonymous>[]
 
 
 Overfull \hbox (1124.38235pt too wide) in paragraph at lines 44--44
-[]\T1/lmtt/m/n/9 ## tracemem[0x7f98b33fce70 -> 0x7f98b2a35630]: eval eval eval_
+[]\T1/lmtt/m/n/9 ## tracemem[0x7fd60a3a7dd0 -> 0x7fd5f9bc08a8]: eval eval eval_
 with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_ca
 ll <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process
 _group.block process_group withCallingHandlers process_file <Anonymous> <Anonym
@@ -1215,7 +1219,7 @@ ous>[]
 
 (./Lecture01.vrb
 Overfull \hbox (1124.38235pt too wide) in paragraph at lines 40--40
-[]\T1/lmtt/m/n/9 ## tracemem[0x7f98b34a46a8 -> 0x7f98b4840d58]: eval eval eval_
+[]\T1/lmtt/m/n/9 ## tracemem[0x7fd61b215228 -> 0x7fd609bf4db8]: eval eval eval_
 with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_ca
 ll <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process
 _group.block process_group withCallingHandlers process_file <Anonymous> <Anonym
@@ -1279,7 +1283,7 @@ cal/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt12.pfb></usr/local/texliv
 e/2022/texmf-dist/fonts/type1/public/lm/lmtt9.pfb></usr/local/texlive/2022/texm
 f-dist/fonts/type1/public/lm/lmtti10.pfb></usr/local/texlive/2022/texmf-dist/fo
 nts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on Lecture01.pdf (27 pages, 470912 bytes).
+Output written on Lecture01.pdf (27 pages, 470379 bytes).
 PDF statistics:
  301 PDF objects out of 1000 (max. 8388607)
  225 compressed objects within 3 object streams
