@@ -6,16 +6,15 @@ output:
   beamer_presentation:
     includes:
       in_header: header_pagenum.tex
-    toc: true 
+    toc: true
 ---
-  
 
 # Course Objectives
 
 ## Course objectives
 
 - Make you R **programmers** rather than just R **users**, by 
-working through most of the book "Advanced R" by Hadley Wickham.The solutions to exercises in the textbook is also available online for free. 
+working through most of the book "Advanced R" by Hadley Wickham: https://adv-r.hadley.nz/index.html
 - Topics:
     - R objects: names and values
     - Basic data structures and programming.
@@ -28,47 +27,73 @@ working through most of the book "Advanced R" by Hadley Wickham.The solutions to
     Python, or C++ from R
     - Parallelizing R code (if time permits)
 
-## Courses Resources
-
-- Lecture time: Tuesday, 12:30 - 2:20 PM at AQ3005. 
-- Textbook and Solutions
-  + Textbook: **Advanced R, 2nd ed.** By Hadley Wickham. Available online for free at https://adv-r.hadley.nz/
-  + Exercise Solutions: **The Advanced R Solutions, 2nd ed.**. Also available online for free at: https://advanced-r-solutions.rbind.io/
-  
-- Evaluations
-  + In-class quizzes (50%): best 5 out of 6 quizzes. 
-  + Group course project (25%).
-  + Closed-book final exam (25%).
-
 ## Getting started with R, RStudio and git
 
 - Follow the ``getting started'' instructions on the class canvas 
 page to get set up with R, RStudio and git.
     * R and RStudio will be familiar, but you may not have used git
     before, so leave some time for that.
-- Please try to get R and RStudio installed and create an RStudio project linked to the class GitHub 
-repository (or a forked copy) as soon as possible. A document shows you steps how to access lecture notes and etc. Here is the link: https://canvas.sfu.ca/courses/74856/files/20688259?wrap=1
-- Those still having trouble after the lecture should ask our TA, Sidi Wu (wusidiw@sfu.ca),
-for help during the first lab sessions this week. 
-    - **Note: Lab starts from this week (week 2)**.
+- Please try to get R and RStudio installed and 
+create an RStudio project linked to the class GitHub 
+repository (or a forked copy) as soon as possible.
+- Those still having trouble after the weekend should ask our TA, Pulindu,
+for help during the first lab sessions in week 2. 
+    - **Note: No lab first week**.
 
+
+# Git and GiHub
+
+## What is Git
+
+- Git is a popular high-quality version control system. By tracking and logging the changes you make to your file or file sets over time, the version control system allows you to review or even restore earlier version. 
+- Git is installed and maintained on your local system (rather than the cloud). 
+- Git is responsive, easy to use and inexpensive (free, actually)
+- Git is command based. But GitHub Desktop is an application that enables you to interact with GitHub using a GUI instead of the command line or a web browser. 
+
+![Git & GitHub Desktop](git-githubDesktop.png){width=40%}
+
+
+## What is GitHub
+  
+- **GitHub** is an online project repository hosting platform which is used for storing, tracking and collaborating on software projects.
+
+![Github logo](github.png){width=30%}
+
+
+- **GitHub**, can be divided into the **Git** and the **Hub**. 
+  * The ``Git" implies the version control system; atoll which allows developers to keep track of the constant revisions of their code.
+  * The ``Hub" is the community of like-minded individuals who participate. It is all about the collaborative effect of the community, in reviewing, improving, and deriving new ideas from the uploaded code. 
+
+## Why you should use GitHub
+
+The main benefits of using Github
+
+1. Enhanced collaboration and track changes in your code across versions. It keeps track revisions - who changed what, when and where those files are stored.  
+2. Make your contribution to open-source projects. 
+3. By using GitHub, you make it easier to Get Excellent documentation. 
+4. Showcase your work. GitHub is the best tool for you to attract recruiters. 
+5. Once you are a verified GitHub Campus Student, you could create private repos and access various developer tools from GitHub's partners.
+
+## Git vs GitHub
+
+![Git vs Github](Git-github.png){width=100%}
 
 ## Reading 
 
 - Welcome, Preface and Chapters 1,2 of the text.
 
-# Chapter 2 - Names and Values
+# R objects (ch 1 & 2)
 
 ## R objects
 
 - In R, data structures and functions are all referred to 
-as "\textcolor{red}{objects}".
-- Objects are created with the assignment operator `<-` or `-`; e.g.,  
+as "objects".
+- Objects are created with the assignment operator `<-`; e.g.,  
 `x <- c(1,2,3)`.
     - The objects a user creates from the R console are contained in
     the user's workspace, called the global environment. 
-    - Use \textcolor{blue}{'ls()`} to see a list of all objects in the workspace. 
-    - Use \textcolor{blue}{'rm(x)'} to remove object `x` from the workspace.
+    - Use `ls()` to see a list of all objects in the workspace. 
+    - Use `rm(x)` to remove object `x` from the workspace.
     
 ## Digging deeper
 
@@ -81,12 +106,10 @@ so it pays to understand what will trigger it.
 
 ## Binding names and to objects
 
-- The R code `x <- c(1,2,3)` does two things: 
-  (i) creates an object in computer memory that contains the values 1, 2, 3 
-  (ii) "binds" that object to the 
+- The R code `x <- c(1,2,3)` does two things: (i) creates
+an object in computer memory 
+that contains the values 1, 2, 3 and (ii) "binds" that object to the 
 "name" `x`.
-
-- The function `lobstr::obj_addr()` allows us see the address/identifier of an object. 
 
 \small
 
@@ -97,6 +120,24 @@ x <- c(1,2,3)
 ls()
 obj_addr(x) # changes every time this code chunk is run
 ```
+
+\normalsize
+
+## Binding multiple names to the same object
+
+* The following binds the name `y` to the same object
+that `x` is bound to.
+
+\small
+
+```{r}
+y <- x
+obj_addr(y)
+```
+
+\normalsize
+![Bind two names to the same object](bind2.png){width=60%} 
+
 
 ## Aside: Syntactic *vs* non-syntactic
 
@@ -118,31 +159,11 @@ ls()
 ```
 
 
-\normalsize
-
-## Binding multiple names to the same object
-
-* The following binds the name `y` to the same object
-that `x` is bound to.
-
-\small
-
-```{r}
-y <- x
-c(obj_addr(x), obj_addr(y))
-```
-
-\normalsize
-![Bind two names to the same object](bind2.png){width=60%} 
-
-
-
-
 
 ## Modifying causes copying
 
 * Modifying a variable causes a copy to be made, with the
-modified variable name bound to the copy.This is called **copy-on-modify**.
+modified variable name bound to the copy.
 
 \footnotesize
 
@@ -165,14 +186,14 @@ whenever a copy is made.
 ```{r}
 x <- c(1,2,3)
 tracemem(x)
-x[[2]] <- 10  # copy made
+x[[2]] <- 10
 untracemem(x)  # remove the trace
 x[[1]] <- 10
 ```
 
 ## More on `tracmem()`
 
-* As the output of  \textcolor{blue}{`tracemem()`} suggests, 
+* As the output of `tracemem()` suggests, 
 the trace is on the object, not the name:
 
 \small
@@ -190,7 +211,7 @@ c(obj_addr(x),obj_addr(y))
 ## Function calls
 
 * R has a reputation for passing copies to functions, but in fact the
-**copy-on-modify** applies to functions too:
+copy-on-modify applies to functions too:
 
 \footnotesize
 
@@ -213,10 +234,7 @@ c(obj_addr(x),obj_addr(y))
 
 ```{r}
 l1 <- list(1, 2, 3)
-rbind(obj_addr(l1),
-      obj_addr(l1[[1]]),
-      obj_addr(l1[[2]]),
-      obj_addr(l1[[3]]))
+c(obj_addr(l1),obj_addr(l1[[1]]),obj_addr(l1[[2]]),obj_addr(l1[[3]]))
 # Note: ref(l1) will print a nicely formatted version of the above,
 # but doesn't work with my slides
 ```
@@ -248,11 +266,9 @@ l2[[3]] <- 4
 
 ```{r}
 l1 <- list(1,2,3)
-rbind(obj_addr(l1),obj_addr(l1[[1]]),
-      obj_addr(l1[[2]]),obj_addr(l1[[3]]))
+c(obj_addr(l1),obj_addr(l1[[1]]),obj_addr(l1[[2]]),obj_addr(l1[[3]]))
 l1[[3]] <- 4 
-rbind(obj_addr(l1),obj_addr(l1[[1]]),
-      obj_addr(l1[[2]]),obj_addr(l1[[3]]))
+c(obj_addr(l1),obj_addr(l1[[1]]),obj_addr(l1[[2]]),obj_addr(l1[[3]]))
 ```
 
 
@@ -263,12 +279,12 @@ rbind(obj_addr(l1),obj_addr(l1[[1]]),
 ```{r}
 dd <- data.frame(x=1:3,y=4:6)
 c(obj_addr(dd[[1]]),obj_addr(dd[[2]]))
-dd[,2] <- 7:9 # change a column
-c(obj_addr(dd[[1]]),obj_addr(dd[[2]])) # only changes 2nd element
-dd[1,] <- c(11,22) # change a row
+dd[,2] <- 7:9
+c(obj_addr(dd[[1]]),obj_addr(dd[[2]])) # only changes second element
+dd[1,] <- c(11,22)
 c(obj_addr(dd[[1]]),obj_addr(dd[[2]])) # changes to both elements
-dd[1,1] <- 111 # change one element
-c(obj_addr(dd[[1]]),obj_addr(dd[[2]])) # only changes 1st element
+dd[1,1] <- 111
+c(obj_addr(dd[[1]]),obj_addr(dd[[2]])) # only changes first element
 ```
 
 ## Beware of data frame overhead
@@ -304,7 +320,6 @@ ll[[1]] <- ll[[1]] - dmed[[1]]
 * The text says there are two exceptions to the copy-on-modify:
     1. Modify an element of an object with one binding, or 
     2. Modify an environment.
-    
 but in my experiments, only the second applies.
 
 \footnotesize
@@ -313,7 +328,6 @@ but in my experiments, only the second applies.
 v <- c(1,2,3) # creates object (1,2,3) and binds v to it
 tracemem(v)
 v[[3]] <- 4 # for me, this triggers a copy
-
 ```
 
 ##
@@ -343,12 +357,10 @@ obj_size(e1)
 obj_size(e2)
 ```
 
-## After lecture
+## Recap of key functions
 
-- Read textbook Chapters 1 (introduction) and 2 (Names and values)
-   + Link: https://adv-r.hadley.nz/names-values.html
-- Try the corresponding exercise in chapter 1. 
-   + Solution can be found here: https://advanced-r-solutions.rbind.io/names-and-values.html
-- Upcoming topic:
-  + Vectors (Ch3) 
-  + Subsetting (Ch4)
+- `tracemem()`: tracks an object so that a message is printed whenever it is copied.
+- `untracemem()`: untrack an object.
+- `lobstr::ref()`: display a tree of object addresses.
+- `lobstr::obj_addr()`: gives the address (in memory) of an object that a name points to.
+- `lobstr::obj_size()`: Gives the size (in memory) of an object. 
