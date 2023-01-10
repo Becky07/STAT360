@@ -36,9 +36,9 @@ page to get set up with R, RStudio and git.
 - Please try to get R and RStudio installed and 
 create an RStudio project linked to the class GitHub 
 repository (or a forked copy) as soon as possible.
-- Those still having trouble after the weekend should ask our TA, Pulindu,
-for help during the first lab sessions in week 2. 
-    - **Note: No lab first week**.
+- Those still having trouble after the weekend should ask our TA, Sidu Wu,
+for help during the first lab sessions in week 3. 
+    - **Note: No lab this week**.
 
 
 # Git and GiHub
