@@ -61,7 +61,7 @@ for help during the first lab sessions in week 3.
 
 
 - **GitHub**, can be divided into the **Git** and the **Hub**. 
-  * The ``Git" implies the version control system; atoll which allows developers to keep track of the constant revisions of their code.
+  * The ``Git" implies the version control system; a tool which allows developers to keep track of the constant revisions of their code.
   * The ``Hub" is the community of like-minded individuals who participate. It is all about the collaborative effect of the community, in reviewing, improving, and deriving new ideas from the uploaded code. 
 
 ## Why you should use GitHub
