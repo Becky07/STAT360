@@ -50,14 +50,14 @@ for help during the first lab sessions in week 3.
 - Git is responsive, easy to use and inexpensive (free, actually)
 - Git is command based. But GitHub Desktop is an application that enables you to interact with GitHub using a GUI instead of the command line or a web browser. 
 
-![Git & GitHub Desktop](git-githubDesktop.png){width=40%}
+![Git & GitHub Desktop](img/git-githubDesktop.png){width=40%}
 
 
 ## What is GitHub
   
 - **GitHub** is an online project repository hosting platform which is used for storing, tracking and collaborating on software projects.
 
-![Github logo](github.png){width=30%}
+![Github logo](img/github.png){width=30%}
 
 
 - **GitHub**, can be divided into the **Git** and the **Hub**. 
@@ -76,7 +76,7 @@ The main benefits of using Github
 
 ## Git vs GitHub
 
-![Git vs Github](Git-github.png){width=100%}
+![Git vs Github](img/Git-github.png){width=100%}
 
 ## Reading 
 
@@ -136,7 +136,7 @@ obj_addr(y)
 ```
 
 \normalsize
-![Bind two names to the same object](bind2.png){width=60%} 
+![Bind two names to the same object](img/bind2.png){width=60%} 
 
 
 ## Aside: Syntactic *vs* non-syntactic
@@ -174,7 +174,7 @@ y[[3]] <- 4 # Note: x[2] <- 10 has the same effect
 c(obj_addr(x),obj_addr(y))
 ```
 \normalsize
-![Bindings after copying](bindnew.png){width=40%} 
+![Bindings after copying](img/bindnew.png){width=40%} 
 
 ## Tracing copying
 
@@ -249,13 +249,13 @@ c(obj_addr(l1),obj_addr(l1[[1]]),obj_addr(l1[[2]]),obj_addr(l1[[3]]))
 l1 <- l2 <- list(1,2,3)
 ```
 
-![Bindings before](listbind2.png){width=30%} 
+![Bindings before](img/listbind2.png){width=30%} 
 
 ```{r}
 l2[[3]] <- 4
 ```
 
-![Bindings after modify](listbindnew.png){width=30%} 
+![Bindings after modify](img/listbindnew.png){width=30%} 
 
 ## Copies of lists are said to be "shallow"
 
@@ -332,7 +332,7 @@ v[[3]] <- 4 # for me, this triggers a copy
 
 ##
 
-![environments](env1.png){width=40%} ![environments](env2.png){width=40%}
+![environments](img/env1.png){width=40%} ![environments](img/env2.png){width=40%}
 
 \footnotesize
 
@@ -361,6 +361,24 @@ obj_size(e2)
 
 - `tracemem()`: tracks an object so that a message is printed whenever it is copied.
 - `untracemem()`: untrack an object.
-- `lobstr::ref()`: display a tree of object addresses.
+- `lobstr::ref()`: display a tree of object addresses for lists, environments.
 - `lobstr::obj_addr()`: gives the address (in memory) of an object that a name points to.
-- `lobstr::obj_size()`: Gives the size (in memory) of an object. 
+- `lobstr::obj_addrs()`: gives the address (in memory) of components this list, environment, and character vector x point to.
+- `lobstr::obj_size()`: Gives the size (in memory) of an object or set of objects.
+- `lobstr::obj_sizes()`: breaks down the individual memory size of multiple objects to the total size.
+
+## Examples of key functions
+
+```{r}
+x1 <- 2:20
+x2 <- c(2:20)
+x3 <- c(2,3,4,5,6:20)
+obj_size(x1,x2,x3) # total size
+obj_sizes(x1,x2,x3) # size for each object
+```
+
+
+## Examples of key functions
+
+![Example of ref()](img/ex-ref.png){width=100%}
+
