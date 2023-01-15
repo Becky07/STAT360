@@ -18,9 +18,14 @@ output:
 
 ## R Data Structures
 
-- Fundamentally, all common data structures in R are vectors, which can 
+- Some people think that there are four common object types store data in R: 
+    - Scalars: store a single numeric value.
+    - String: store a set of one or more characters.
+    - Vector: store several scalar or string elements.
+    - Data Frames: store several vectors (meaning that they contain several rows and columns)
+- Fundamentally, all common data structures in R are **vectors**, which can 
 be "**atomic**" or "**list**".
-- R has no true scalars; e.g., in `x<-1`, `x` is a vector of length one.
+- R has no true **scalars** (a special syntax to create an individual value), everything that looks like a scalar is actually a vector of one. e.g., in `x<-1`, `x` is a vector of length one.
 - Use `str()` to see the structure of an object
 
 ## Types of objects
@@ -31,7 +36,6 @@ in computer memory.
 "double", "character" and "list".
     * Find the type of an object with `typeof()`.
     
-    
 \scriptsize
 
 ```{r}
@@ -39,28 +43,30 @@ x <- 6 # stores as double by default
 typeof(x)
 y <- 6L # The "L" suffix forces storage as integer  
 typeof(y)
+class(y)
 ```
 
 
-## Type *versus* Mode
+## Type, class and mode
 
-- In addition to the type of an object, there is its
-"mode". 
-- The mode of an object is generally the same as its type,
-but the modes are coarser.
-    - For example, integer and double types are both of mode
-    "numeric".
-- I don't understand the need for mode.
-    - The only reason I mention it is that the `str()` function 
-    sometimes reports the mode of an object, rather than
-    its type, so we will frequently see reports of numeric objects.
+In addition to the type of an object, there is its
+"mode" and "class".
+
+- typeof() gives the type of objects from R's point of view.
+- class() is used to define/identify what "type" an object is from the point of view of object-oriented programming in R. e.g., class(y) gives "integer", this means any generic function that has an "integer" method will be used. 
+- mode() gives the type of object from the point of view of Becker, Chambers and Wilks (1988). 
+    - More compatible with other S implementation. 
+    - The mode of an object is generally the same as its type,but the modes are coarser. For example, integer and double types are both of mode "numeric".
+
 
 \scriptsize
 
 ```{r}
-mode(x)
-mode(y)
+c(mode(x) ,mode(y) )
 ```
+
+\normalsize 
+Reference: [Stack overflow discussion thread](https://stackoverflow.com/questions/29787850/how-do-i-add-a-url-to-r-markdown)
 
 
 # Vectors 
@@ -73,10 +79,7 @@ mode(y)
     - **List** ("generic vectors"): objects can be of different types. 
     - (low-key third type) `NULL`: absence of vector. 
     
- ![vector types](img/vector-type.png){width=40%}
-
-- R has no true **scalars** (a special syntax to create an individual value), everything that looks like a scalar is actually a vector of one. e.g., `x<-1`. 
-- Empty vectors can be created by the `vector()` function:
+ ![vector types](img/vector-type.png){width=50%}
 
 ## The null object
 
@@ -111,7 +114,7 @@ Integers and doubles are together called ``numeric"
 
  ![vector types](img/tree-atomic.png){width=38%}
 
-## Creating empty vectors and Combining vectors
+## Creating empty vectors and combining vectors
 
 - Use `vector()` to create an empty vector
 
@@ -135,8 +138,9 @@ c(avec,c(100,101))
 c(lvec,TRUE)
 ```
 
-## Combining lists
+## Lists and combining lists
 
+* Lists are like vectors except each element of it can be of any type. 
 * `c()` concatenates two lists, which may or may not be what you intend.
 
 \scriptsize
@@ -144,6 +148,18 @@ c(lvec,TRUE)
 ```{r}
 ll1 <- list(a=1:2,b=3:4); ll2 <- list(a=5:6,b=7:8)
 c(ll1,ll2) # not the same as list(ll1,ll2)
+```
+
+
+## 
+
+* if you use `c()` with a list and a vector,  then it will first coerce the vector into a list where each element is a list.
+
+\scriptsize
+
+```{r}
+ll1 <- list(a=1:2,b=3:4); 
+c(ll1,c("c","d"))  # same as: c( ll1, as.list(c("c","d")) )
 ```
 
 \normalsize 
@@ -400,17 +416,41 @@ x
 ## 
 
 - This is useful for subsetting, and for bookkeeping when you have data structured in a complicated multidimensional array (e.g. it is hard to remember what indexes the first vs second vs third dimensions without dimnames).
-- A vector is not a matrix with 1 dimension, it has NULL dimsions.
+- A vector is not a matrix with 1 dimension, it has NULL dimensions.
 
 \scriptsize
 
 ```{r}
 x["a","c","g"] # easy subsetting
 z <- 1:3
-dim(z)
+dim(z) # nrow() and ncol() return the same result
 
 # Exercise: how do you get rid of the dimensions in following array?
-x <- array(1:12, dim=c(2,2,3))
+x <- array(1:12, dim=c(2,2,3)) # two methods
+```
+
+## 
+
+- nrow() and ncol() return the number of rows or columns of a matrix or an array. NROW() and NROW() do the same but they treat a vector as a 1-column matrix, even a 0-length vector. 
+
+\scriptsize 
+```{r}
+z <- 1:3
+nrow(z)
+ncol(z)
+NROW(z)
+NCOL(z)
+```
+
+\normalsize
+Exercise: predict the output
+
+\scriptsize 
+
+```{r, eval=F}
+z0 <- NULL
+NROW(z0)
+NCOL(z0)
 ```
 
 ## Vector attribute -  `class` 
@@ -740,20 +780,21 @@ store data in R.
     - Implemented as a list (columns are list elements), but also behave like a matrix in terms of combining and subsetting.
 - Create with `data.frame`:
 
-\footnotesize
-
+\scriptsize
 ```{r}
 set.seed(1)
 n <- 4
 x <- 1:n; y <- rnorm(n,mean=x,sd=1) # multiple commands separated by ;
 dd <- data.frame(x=x,y=y) # like making a list
 str(dd)
+dd
 ```
 
 ## Row and column names
 
 * Get and set with `rownames()` and `colnames()`, respectively.
 * `names()` also gets and sets the column names
+* `rownames()` and  `row.names()` both can the row names of a matrix or a dataframe, but for a data frame, value for rownames should be a character vector of non-duplicated and non-missing names (this is enforced).
 
 \scriptsize
 
@@ -773,6 +814,9 @@ rownames(dd)
 ```{r}
 dd$x 
 dd[[1]]
+dd[1] # also try dd[1,]
+c( typeof(dd$x),typeof(dd[[1]]),typeof(dd[1]) )
+c( class(dd$x), class(dd[[1]]), class(dd[1]) )
 ```
 
 ## Subsetting and combining data frames like a matrix
@@ -839,6 +883,8 @@ on scalars
 - `|` and `||` are OR, with `|` acting vector-wise and `||` acting 
 on scalars
 - Make sure you understand the following:
+
+\scriptsize
 ```{r}
 x <- c(TRUE,TRUE,FALSE); y <- c(FALSE,TRUE,TRUE)
 !x ; x&y ; x&&y ; x|y ; x||y
@@ -859,6 +905,8 @@ x <- c(TRUE,TRUE,FALSE); y <- c(FALSE,TRUE,TRUE)
 - `<` is less than, `<=` is less than or equal
 - `==` is equal and `!=` is not equal
 - Make sure you understand the following:
+
+\scriptsize
 ```{r}
 x <- 1:3; y <- 3:1
 x>y ; x>=y ; x<y ; x<=y ; x==y ; x!=y
