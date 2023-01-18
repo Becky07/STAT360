@@ -189,7 +189,7 @@ c(list(ll1),list(ll2)) # keep this in mind for the project
     - This rarely matters because logicals get coerced to other types when needed. 
     - Never use `==` when testing for missingness. It will return `NA` since it is always unkown if two unknowns are equal.
     - Test for and set missing values with `is.na()`. 
-- Attempting to combine vectors of different types coerces them to the same type. The order of preference is character>integer>double>logical. 
+- Attempting to combine vectors of different types coerces them to the same type. The order of preference is character>double>integer>logical. 
 
 ##
 
