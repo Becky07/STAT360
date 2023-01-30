@@ -1,5 +1,5 @@
 ---
-title: "Exercises for lecture 02"
+title: "Lecture 02 exercise"
 author: "Becky Lin"
 output: 
   html_document:

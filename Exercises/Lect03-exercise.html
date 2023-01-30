@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Becky Lin" />
+<meta name="author" content="Becky" />
 
 
-<title>Exercises solution for lecture 02</title>
+<title>Lecture 03 exercises</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -355,322 +355,145 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Exercises solution for lecture 02</h1>
-<h4 class="author">Becky Lin</h4>
+<h1 class="title toc-ignore">Lecture 03 exercises</h1>
+<h4 class="author">Becky</h4>
 
 </div>
 
 
+<div id="more-on-matrices-vs-data-frames" class="section level2">
+<h2>More on matrices <em>vs</em> data frames</h2>
 <ol style="list-style-type: decimal">
-<li>Predict the outcome of the following:</li>
+<li>The following simulation function simulates <span class="math inline">\(n\)</span> replicates of an explanatory variable
+<span class="math inline">\(X\)</span> and a response variable <span class="math inline">\(Y = \beta X + E\)</span>, where <span class="math inline">\(\beta\)</span> is a regression coefficient between
+<span class="math inline">\(-1\)</span> and <span class="math inline">\(1\)</span> and <span class="math inline">\(E\sim
+N(0,1)\)</span> is random noise. Run the code chunk and then use the
+function to simulate one dataset of size <span class="math inline">\(n=1000\)</span> and save the result in an object
+called <code>dd</code>.</li>
 </ol>
-<pre><code>c(1, FALSE)
-c(&quot;a&quot;,1)
-c(list(1),&quot;a&quot;)
-c(TRUE,1)
-c(FALSE,2L)
-typeof(c(1,2,3, NA))
-is.infinite(c(1,Inf,-Inf, NaN))
-is.nan(c(1,Inf,-Inf, NaN))
-typeof(c(&quot;hello&quot;,9L, TRUE)) </code></pre>
-<p><em>Solution</em> You can see what they return by typing each line
-into the R console. The key point is that combining different data types
-coerces the less flexible type to the more flexible type. The order of
-preference is: character <span class="math inline">\(&gt;\)</span>double
-<span class="math inline">\(&gt;\)</span> integer <span class="math inline">\(&gt;\)</span>logical.</p>
-<pre class="r"><code>c(1, FALSE)</code></pre>
-<pre><code>## [1] 1 0</code></pre>
-<pre class="r"><code>c(&quot;a&quot;,1)</code></pre>
-<pre><code>## [1] &quot;a&quot; &quot;1&quot;</code></pre>
-<pre class="r"><code>c(list(1),&quot;a&quot;)</code></pre>
-<pre><code>## [[1]]
-## [1] 1
-## 
-## [[2]]
-## [1] &quot;a&quot;</code></pre>
-<pre class="r"><code>c(TRUE,1)</code></pre>
-<pre><code>## [1] 1 1</code></pre>
-<pre class="r"><code>c(FALSE,2L)</code></pre>
-<pre><code>## [1] 0 2</code></pre>
-<pre class="r"><code>typeof(c(1,2,3, NA))</code></pre>
-<pre><code>## [1] &quot;double&quot;</code></pre>
-<pre class="r"><code>is.infinite(c(1,Inf,-Inf, NaN))</code></pre>
-<pre><code>## [1] FALSE  TRUE  TRUE FALSE</code></pre>
-<pre class="r"><code>is.nan(c(1,Inf,-Inf, NaN))</code></pre>
-<pre><code>## [1] FALSE FALSE FALSE  TRUE</code></pre>
-<pre class="r"><code>typeof(c(&quot;hello&quot;,9L, TRUE)) </code></pre>
-<pre><code>## [1] &quot;character&quot;</code></pre>
+<pre class="r"><code>simdat &lt;- function(n) {
+  beta &lt;- runif(1,min=-1,max=1)
+  x &lt;- rnorm(n)
+  y &lt;- beta * x + rnorm(n)
+  data.frame(x=x,y=y)
+}</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li>Explain the result</li>
+<li>Create a larger dataset by calling <code>simdat()</code>
+<code>N=500</code> times over and stacking the results. The larger
+dataset should have <code>500*1000</code> rows and 2 columns. Call your
+stacked dataset <code>bigd1</code>. To create the stacked dataset,
+initialize with <code>bigd1 &lt;- NULL</code> and use a <code>for</code>
+loop to build up <code>bigd1</code> one layer at a time. Time this code
+using the <code>system.time()</code> function. An example use of
+<code>system.time()</code> to time an R command, e.g.,
+<code>x &lt;- rnorm(100000)</code> is:</li>
 </ol>
-<pre class="r"><code>1 == &quot;1&quot;</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>-1 &lt; FALSE</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>&quot;one&quot; &lt; 2 </code></pre>
-<pre><code>## [1] FALSE</code></pre>
-<p><strong>Solution:</strong> Comparing different data types coerces the
-less flexible type to the more flexible type. The order of preference
-is: character <span class="math inline">\(&gt;\)</span>double <span class="math inline">\(&gt;\)</span> integer <span class="math inline">\(&gt;\)</span>logical. So the first one is
-equivalent to compare “1”==“1” which leads to TRUE, for the second one,
-FALSE coerces to 0 then we compare <span class="math inline">\(-1&lt;
-0\)</span> which is TRUE.For the last one, essentially we compare “one”
-and “2”, you will get FALSE as <code>utf8ToInt(&quot;o&quot;)</code> = 111 and
-<code>utf8toInt(&quot;2&quot;)</code> = 50.</p>
+<pre class="r"><code>system.time({
+  x &lt;- rnorm(100000) # Could put multiple lines of R code here
+})</code></pre>
+<pre><code>##    user  system elapsed 
+##   0.005   0.001   0.005</code></pre>
+<p>Use the first element of the output (<code>user</code> time) as your
+measure of execution time.</p>
 <ol start="3" style="list-style-type: decimal">
-<li>If <code>vv &lt;- list(a=1,b=2)</code>, why doesn’t
-<code>as.vector(vv)</code> work to coerce <code>vv</code> into an atomic
-vector?</li>
+<li><p>Repeat 2, but this time, instead of stacking the output of
+<code>simdat()</code>, coerce the output of <code>simdat()</code> to a
+matrix, and stack the matrices. Use <code>system.time()</code> to time
+your code and compare the timing from question (2).</p></li>
+<li><p>Now build <code>bigd2</code> by (i) initializing an empty matrix
+of appropriate dimension, and (ii) looping 500 times and inserting
+simulated datasets of size <span class="math inline">\(n=1000\)</span>,
+coerced to matrices, into successive layers of <code>bigd2</code>. Time
+this code and compare the timing to that of part (3). You may find the
+following R function useful:</p></li>
 </ol>
-<p><strong>Solution:</strong> Because <code>vv</code> is already a
-vector.</p>
-<pre class="r"><code>vv &lt;- list(a=1,b=2)
-is.vector(vv)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>unlist(vv)</code></pre>
-<pre><code>## a b 
-## 1 2</code></pre>
-<ol start="4" style="list-style-type: decimal">
-<li>What do <code>dim()</code>, <code>nrow()</code> and
-<code>ncol()</code> return when applied to a 1-dimensional vector? What
-about <code>NROW()</code> or <code>NCOL()</code>?</li>
+<pre class="r"><code>layerInds &lt;- function(layerNum,nrow) {
+  ((layerNum-1)*nrow + 1):(layerNum*nrow) 
+}
+# Example use:
+inds &lt;- layerInds(layer=1,nrow=1000)
+range(inds)</code></pre>
+<pre><code>## [1]    1 1000</code></pre>
+</div>
+<div id="control-flow" class="section level2">
+<h2>Control flow</h2>
+<ol style="list-style-type: decimal">
+<li>What type of vector does each of the following return?</li>
 </ol>
-<p><strong>Solution:</strong> Try
-<code>x &lt;- c(1,2,3); dim(x); nrow(x); ncol(x)</code> to see that each
-returns NULL, because a 1-d vector has no dim attribute. NROW and NCOL
-treat a vector as a 1-column matrix.</p>
-<pre class="r"><code>x &lt;- c(1,2,3) 
-dim(x) </code></pre>
-<pre><code>## NULL</code></pre>
-<pre class="r"><code>nrow(x) </code></pre>
-<pre><code>## NULL</code></pre>
-<pre class="r"><code>ncol(x)</code></pre>
-<pre><code>## NULL</code></pre>
-<pre class="r"><code>NROW(x)</code></pre>
-<pre><code>## [1] 3</code></pre>
-<pre class="r"><code>NCOL(x)</code></pre>
+<pre class="r"><code>ifelse(TRUE, 1, &quot;no&quot;)</code></pre>
 <pre><code>## [1] 1</code></pre>
-<ol start="5" style="list-style-type: decimal">
-<li>What is <code>dim(cbind(A,A))</code> if
-<code>A = matrix(1:4,2,2)</code>?</li>
+<pre class="r"><code>ifelse(FALSE, 1, &quot;no&quot;)</code></pre>
+<pre><code>## [1] &quot;no&quot;</code></pre>
+<pre class="r"><code>ifelse(NA, 1, &quot;no&quot;)</code></pre>
+<pre><code>## [1] NA</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Re-write the following using <code>switch</code></li>
 </ol>
-<p><strong>Solution:</strong> we combine two 2 by 2 matrix by columns,
-so it results in a 2 by 4 matrix. The <code>dim()</code> will give: 2
-4.</p>
-<pre class="r"><code>A = matrix(1:4,2,2)
-cbind(A,A)</code></pre>
-<pre><code>##      [,1] [,2] [,3] [,4]
-## [1,]    1    3    1    3
-## [2,]    2    4    2    4</code></pre>
-<pre class="r"><code>dim(cbind(A,A))</code></pre>
-<pre><code>## [1] 2 4</code></pre>
-<ol start="6" style="list-style-type: decimal">
-<li>What do the following return? Understand why.</li>
+<pre class="r"><code>IQR_mid &lt;- function(x) mean(quantile(x,c(.25,.75)))
+cc &lt;- function(x,method) {
+  if(method==&quot;mean&quot;) {
+    mean(x)
+  } else if(method==&quot;median&quot;) {
+    median(x)
+  } else if(method==&quot;IQR_mid&quot;) {
+    IQR_mid(x)
+  } else stop(&quot;centring method &quot;,method,&quot; not implemented&quot;)
+}
+set.seed(123)
+x &lt;- c(-3,rnorm(100),1000)
+cc(x,&quot;mean&quot;)</code></pre>
+<pre><code>## [1] 9.863143</code></pre>
+<pre class="r"><code>cc(x,&quot;median&quot;)</code></pre>
+<pre><code>## [1] 0.06175631</code></pre>
+<pre class="r"><code>cc(x,&quot;IQR_mid&quot;)</code></pre>
+<pre><code>## [1] 0.0993383</code></pre>
+<pre class="r"><code>try(cc(x,&quot;cat&quot;))</code></pre>
+<pre><code>## Error in cc(x, &quot;cat&quot;) : centring method cat not implemented</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Rewrite the following function so that it uses a
+<code>while()</code> loop instead of the <code>for()</code> loop and
+<code>break</code> statement. Your while-approach will not require the
+<code>maxit</code> upper limit on the number of iterations.</li>
 </ol>
-<pre><code>TRUE | FALSE
-c(TRUE,TRUE) &amp; c(FALSE,TRUE)
-c(TRUE,TRUE) &amp;&amp; c(FALSE,TRUE)</code></pre>
-<p><strong>Solution:</strong> The key here is that &amp; is vectorized
-while &amp;&amp; only checks the first element of the two vectors.</p>
-<pre class="r"><code>TRUE | FALSE</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>c(TRUE,TRUE) &amp; c(FALSE,TRUE)</code></pre>
-<pre><code>## [1] FALSE  TRUE</code></pre>
-<pre class="r"><code>c(TRUE,TRUE) &amp;&amp; c(FALSE,TRUE)</code></pre>
-<pre><code>## Warning in c(TRUE, TRUE) &amp;&amp; c(FALSE, TRUE): &#39;length(x) = 2 &gt; 1&#39; in coercion to
-## &#39;logical(1)&#39;
-
-## Warning in c(TRUE, TRUE) &amp;&amp; c(FALSE, TRUE): &#39;length(x) = 2 &gt; 1&#39; in coercion to
-## &#39;logical(1)&#39;</code></pre>
-<pre><code>## [1] FALSE</code></pre>
-<p>Remember the following truth tables</p>
-<table>
-<colgroup>
-<col width="21%" />
-<col width="21%" />
-<col width="15%" />
-<col width="21%" />
-<col width="19%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>condition1 (X)</th>
-<th>condition2 (Y)</th>
-<th>Not X (~X)</th>
-<th>X AND Y (X &amp;&amp; Y)</th>
-<th>X OR Y (X||Y)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>FALSE</td>
-<td>FALSE</td>
-<td>TRUE</td>
-<td>FALSE</td>
-<td>FALSE</td>
-</tr>
-<tr class="even">
-<td>FALSE</td>
-<td>TRUE</td>
-<td>TRUE</td>
-<td>FALSE</td>
-<td>TRUE</td>
-</tr>
-<tr class="odd">
-<td>TRUE</td>
-<td>FALSE</td>
-<td>FALSE</td>
-<td>FALSE</td>
-<td>TRUE</td>
-</tr>
-<tr class="even">
-<td>TRUE</td>
-<td>TRUE</td>
-<td>FALSE</td>
-<td>TRUE</td>
-<td>TRUE</td>
-</tr>
-</tbody>
-</table>
-<ol start="7" style="list-style-type: decimal">
-<li>What sort of object does <code>table()</code> return? What is its
-type? What attributes does it have? How does the dimensionality change
-as you tabulate more variables?</li>
+<pre class="r"><code>rtruncNormal &lt;- function(thresh = 2, maxit=1000) {
+  x&lt;-NULL
+  for(i in 1:maxit) {
+    xnew &lt;- rnorm(n=1)
+    if(xnew&gt;thresh) {
+      break
+    }
+    x &lt;- c(x,xnew)
+  }
+  x
+}
+set.seed(1234)
+rtruncNormal()</code></pre>
+<pre><code>##  [1] -1.20706575  0.27742924  1.08444118 -2.34569770  0.42912469  0.50605589
+##  [7] -0.57473996 -0.54663186 -0.56445200 -0.89003783 -0.47719270 -0.99838644
+## [13] -0.77625389  0.06445882  0.95949406 -0.11028549 -0.51100951 -0.91119542
+## [19] -0.83717168</code></pre>
+</div>
+<div id="functions" class="section level2">
+<h2>Functions</h2>
+<ol start="4" style="list-style-type: decimal">
+<li>The following code chunk is typed into the R Console.
+<ul>
+<li>What is the output of the function call <code>f(5)</code>?</li>
+<li>What is the enclosing environment of <code>f()</code>?</li>
+<li>What is the enclosing environment of <code>g()</code>?</li>
+<li>What search order does R use to find the value of <code>x</code>
+when it is needed in <code>g()</code>?</li>
+</ul>
+<pre><code>x &lt;- 1
+f &lt;- function(y) {
+  g &lt;- function(z) {
+ (x+z)^2
+  }
+  g(y)
+}
+f(5)</code></pre></li>
 </ol>
-<p><em>Solution</em> An array with class attribute “table”. The array is
-of type int. The dimension increases with each variable. Tabulating 2
-variables returns a 2-d array (matrix), 3 variables returns a 3-d array,
-etc. Try the following in R</p>
-<pre><code>tt &lt;- table(c(1,1,2,2,3,3),c(1,1,1,3,3,3),c(1,1,1,1,2,2)) 
-tt
-str(tt)</code></pre>
-<ol start="8" style="list-style-type: decimal">
-<li>What happens to a factor when you modify its levels? How do f2 and
-f3 differ from f1?</li>
-</ol>
-<pre><code>f1 &lt;- factor(letters)
-levels(f1) &lt;- rev(levels(f1))
-f2 &lt;- rev(factor(letters))
-f3 &lt;- factor(letters, levels = rev(letters))</code></pre>
-<p><em>Solution</em> The labels on the underlying integer values change,
-but the integer values themselves don’t. Try the following:</p>
-<pre class="r"><code>f1 &lt;- factor(letters)
-f1</code></pre>
-<pre><code>##  [1] a b c d e f g h i j k l m n o p q r s t u v w x y z
-## Levels: a b c d e f g h i j k l m n o p q r s t u v w x y z</code></pre>
-<pre class="r"><code>str(f1)</code></pre>
-<pre><code>##  Factor w/ 26 levels &quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...</code></pre>
-<pre class="r"><code>levels(f1) &lt;- rev(levels(f1))
-f1</code></pre>
-<pre><code>##  [1] z y x w v u t s r q p o n m l k j i h g f e d c b a
-## Levels: z y x w v u t s r q p o n m l k j i h g f e d c b a</code></pre>
-<pre class="r"><code>str(f1)</code></pre>
-<pre><code>##  Factor w/ 26 levels &quot;z&quot;,&quot;y&quot;,&quot;x&quot;,&quot;w&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...</code></pre>
-<pre class="r"><code>f2 &lt;- rev(factor(letters))
-f2</code></pre>
-<pre><code>##  [1] z y x w v u t s r q p o n m l k j i h g f e d c b a
-## Levels: a b c d e f g h i j k l m n o p q r s t u v w x y z</code></pre>
-<pre class="r"><code>str(f2)</code></pre>
-<pre><code>##  Factor w/ 26 levels &quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,..: 26 25 24 23 22 21 20 19 18 17 ...</code></pre>
-<pre class="r"><code>f3 &lt;- factor(letters, levels = rev(letters))
-f3</code></pre>
-<pre><code>##  [1] a b c d e f g h i j k l m n o p q r s t u v w x y z
-## Levels: z y x w v u t s r q p o n m l k j i h g f e d c b a</code></pre>
-<pre class="r"><code>str(f3)</code></pre>
-<pre><code>##  Factor w/ 26 levels &quot;z&quot;,&quot;y&quot;,&quot;x&quot;,&quot;w&quot;,..: 26 25 24 23 22 21 20 19 18 17 ...</code></pre>
-<pre class="r"><code>data.frame(f1,as.numeric(f1),f2,as.numeric(f2),f3,as.numeric(f3))</code></pre>
-<pre><code>##    f1 as.numeric.f1. f2 as.numeric.f2. f3 as.numeric.f3.
-## 1   z              1  z             26  a             26
-## 2   y              2  y             25  b             25
-## 3   x              3  x             24  c             24
-## 4   w              4  w             23  d             23
-## 5   v              5  v             22  e             22
-## 6   u              6  u             21  f             21
-## 7   t              7  t             20  g             20
-## 8   s              8  s             19  h             19
-## 9   r              9  r             18  i             18
-## 10  q             10  q             17  j             17
-## 11  p             11  p             16  k             16
-## 12  o             12  o             15  l             15
-## 13  n             13  n             14  m             14
-## 14  m             14  m             13  n             13
-## 15  l             15  l             12  o             12
-## 16  k             16  k             11  p             11
-## 17  j             17  j             10  q             10
-## 18  i             18  i              9  r              9
-## 19  h             19  h              8  s              8
-## 20  g             20  g              7  t              7
-## 21  f             21  f              6  u              6
-## 22  e             22  e              5  v              5
-## 23  d             23  d              4  w              4
-## 24  c             24  c              3  x              3
-## 25  b             25  b              2  y              2
-## 26  a             26  a              1  z              1</code></pre>
-<p>You can see that f2 and f1 print the same but the integer-to-label
-correspondence is backwards. Conversely, f3 and f3 have the same
-integer-to-label correspondence, but the labels are in reverse
-order.</p>
-<ol start="9" style="list-style-type: decimal">
-<li>Fix each of the following common data frame subsetting errors:</li>
-</ol>
-<pre><code>mtcars[mtcars$cyl = 4, ]
-mtcars[-1:4, ]
-mtcars[mtcars$cyl &lt;= 5]
-mtcars[mtcars$cyl == 4 | 6, ]</code></pre>
-<p><em>Solution</em></p>
-<pre><code>mtcars[mtcars$cyl == 4,]
-mtcars[-c(1:4),]
-mtcars[mtcars$cyl &lt;= 5,]
-mtcars[mtcars$cyl ==4 | mtcars$cyl == 6, ]</code></pre>
-<ol start="10" style="list-style-type: decimal">
-<li>Consider the following data frame and tibble. Suppose you want to
-extract the number from the first row and first column and multiply this
-number by the vector <code>1:3</code>. How would you do this for the
-data frame? How would you do this for the tibble?</li>
-</ol>
-<pre><code>dd &lt;- data.frame(x=1:3,y=c(&quot;a&quot;,&quot;b&quot;,&quot;c))
-tt &lt;- as.tibble(dd)</code></pre>
-<p><em>Solution</em>:</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
-## ✔ tibble  3.1.7     ✔ dplyr   1.0.9
-## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
-## ✔ readr   2.1.2     ✔ forcats 0.5.2
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>dd &lt;- data.frame(x=1:3,y=c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;))
-tt &lt;- as.tibble(dd) </code></pre>
-<pre><code>## Warning: `as.tibble()` was deprecated in tibble 2.0.0.
-## Please use `as_tibble()` instead.
-## The signature and semantics have changed, see `?as_tibble`.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
-<pre class="r"><code>dd[1,1]*(1:3)</code></pre>
-<pre><code>## [1] 1 2 3</code></pre>
-<pre class="r"><code>as.numeric(tt[1,1])*(1:3)</code></pre>
-<pre><code>## [1] 1 2 3</code></pre>
-<ol start="11" style="list-style-type: decimal">
-<li>Read the help file <code>help(&quot;%in%&quot;)</code>. Copy the following
-data frame into R.</li>
-</ol>
-<pre><code>students &lt;- data.frame(
-           major=c(&quot;Stat&quot;,&quot;Stat&quot;,&quot;Econ&quot;,&quot;Bus&quot;,&quot;Phys&quot;,&quot;ActSci&quot;,&quot;ActSci&quot;),
-           year=c(3,4,4,5,3,3,4))</code></pre>
-<p>Use <code>%in%</code> to create a logical vector of students who
-major in Stat or ActSci and use this to subset <code>students</code> to
-Stat or ActSci majors.</p>
-<p><em>Solution</em></p>
-<pre class="r"><code>students &lt;- data.frame(
-           major=c(&quot;Stat&quot;,&quot;Stat&quot;,&quot;Econ&quot;,&quot;Bus&quot;,&quot;Phys&quot;,&quot;ActSci&quot;,&quot;ActSci&quot;),
-           year=c(3,4,4,5,3,3,4))
-students[students$major %in% c(&quot;Stat&quot;,&quot;ActSci&quot;),]</code></pre>
-<pre><code>##    major year
-## 1   Stat    3
-## 2   Stat    4
-## 6 ActSci    3
-## 7 ActSci    4</code></pre>
+</div>
 
 
 

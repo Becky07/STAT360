@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Becky Lin" />
 
 
-<title>Lecture 02 exercise</title>
+<title>Lecture 01 exercise solution</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -355,80 +354,79 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Lecture 02 exercise</h1>
-<h4 class="author">Becky Lin</h4>
+<h1 class="title toc-ignore">Lecture 01 exercise solution</h1>
 
 </div>
 
 
 <ol style="list-style-type: decimal">
-<li>Predict the outcome of the following:</li>
+<li>On which line does a get copied in the following example?</li>
 </ol>
-<pre><code>c(1, FALSE)
-c(&quot;a&quot;,1)
-c(list(1),&quot;a&quot;)
-c(TRUE,1)
-c(FALSE,2L)
-typeof(c(1,2,3, NA))
-is.infinite(c(1,Inf,-Inf, NaN))
-is.nan(c(1,Inf,-Inf, NaN))
-typeof(c(&quot;hello&quot;,9L, TRUE)) </code></pre>
+<pre class="r"><code>a &lt;- c(1, 5, 3, 2)
+b &lt;- a
+b[[1]] &lt;- 10</code></pre>
+<p><strong>Solution</strong>: Line 3:</p>
+<pre class="r"><code>a &lt;- c(1, 5, 3, 2)
+tracemem(a)</code></pre>
+<pre><code>## [1] &quot;&lt;0x7f79ca1467c8&gt;&quot;</code></pre>
+<pre class="r"><code>b &lt;- a
+tracemem(b)</code></pre>
+<pre><code>## [1] &quot;&lt;0x7f79ca1467c8&gt;&quot;</code></pre>
+<pre class="r"><code>b[[1]] &lt;- 10</code></pre>
+<pre><code>## tracemem[0x7f79ca1467c8 -&gt; 0x7f79ca180bd8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt;</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li>Explain the result</li>
+<li>In the following code chunk, does <code>x</code> get copied? Does
+<code>ll</code> get copied? Does <code>ee</code> get copied?</li>
 </ol>
-<pre class="{r}}"><code>1 == &quot;1&quot;
--1 &lt; FALSE
-&quot;one&quot; &lt; 2 </code></pre>
+<pre class="r"><code>x &lt;- rnorm(100); y &lt;- rnorm(100)
+ll &lt;- list(x=x,y=y)
+ll$x &lt;- 1:100
+ee &lt;- rlang::env(x=x,y=y)
+ee$x &lt;- 1:100</code></pre>
+<p><strong>Solutions</strong> Use <code>tracemem()</code> on
+<code>x</code>, <code>y</code> and <code>ll</code> to see that only
+<code>ll</code> gets copied. (Recall that you can’t put a trace on the
+environment <code>ee</code>.)</p>
+<pre class="r"><code>x &lt;- rnorm(100); y &lt;- rnorm(100)
+tracemem(x)</code></pre>
+<pre><code>## [1] &quot;&lt;0x7f79ebabfa00&gt;&quot;</code></pre>
+<pre class="r"><code>tracemem(y)</code></pre>
+<pre><code>## [1] &quot;&lt;0x7f79ebabfd50&gt;&quot;</code></pre>
+<pre class="r"><code>ll &lt;- list(x=x,y=y)
+tracemem(ll)</code></pre>
+<pre><code>## [1] &quot;&lt;0x7f79ed6e5108&gt;&quot;</code></pre>
+<pre class="r"><code>ll$x &lt;- 1:100</code></pre>
+<pre><code>## tracemem[0x7f79ed6e5108 -&gt; 0x7f79eb20dec8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt;</code></pre>
+<pre class="r"><code>ee &lt;- rlang::env(x=x,y=y)
+# tracemem(ee) 
+## error: tracemem() can&#39;t apply to an environment
+ee$x &lt;- 1:100</code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li><p>If <code>vv &lt;- list(a=1,b=2)</code>, why doesn’t
-<code>as.vector(vv)</code> work to coerce <code>vv</code> into an atomic
-vector?</p></li>
-<li><p>What do <code>dim()</code>, <code>nrow()</code> and
-<code>ncol()</code> return when applied to a 1-dimensional vector? What
-about <code>NROW()</code> or <code>NCOL()</code>?</p></li>
-<li><p>What is <code>dim(cbind(A,A))</code> if
-<code>A = matrix(1:4,2,2)</code>?</p></li>
-<li><p>What do the following return? Understand why.</p></li>
+<li>Find the size of the objects x and y in the following code chunk.
+Which is smaller? If instead of vectors from 1 to 10 they were vectors
+from 1 to 1 million, which would be smaller?</li>
 </ol>
-<pre><code>TRUE | FALSE
-c(TRUE,TRUE) &amp; c(FALSE,TRUE)
-c(TRUE,TRUE) &amp;&amp; c(FALSE,TRUE)</code></pre>
-<ol start="7" style="list-style-type: decimal">
-<li><p>What sort of object does <code>table()</code> return? What is its
-type? What attributes does it have? How does the dimensionality change
-as you tabulate more variables?</p></li>
-<li><p>What happens to a factor when you modify its levels? How do f2
-and f3 differ from f1?</p></li>
-</ol>
-<pre><code>f1 &lt;- factor(letters)
-levels(f1) &lt;- rev(levels(f1))
-f2 &lt;- rev(factor(letters))
-f3 &lt;- factor(letters, levels = rev(letters))</code></pre>
-<ol start="9" style="list-style-type: decimal">
-<li>Fix each of the following common data frame subsetting errors:</li>
-</ol>
-<pre><code>mtcars[mtcars$cyl = 4, ]
-mtcars[-1:4, ]
-mtcars[mtcars$cyl &lt;= 5]
-mtcars[mtcars$cyl == 4 | 6, ]</code></pre>
-<ol start="10" style="list-style-type: decimal">
-<li>Consider the following data frame and tibble. Suppose you want to
-extract the number from the first row and first column and multiply this
-number by the vector <code>1:3</code>. How would you do this for the
-data frame? How would you do this for the tibble?</li>
-</ol>
-<pre><code>dd &lt;- data.frame(x=1:3,y=c(&quot;a&quot;,&quot;b&quot;,&quot;c))
-tt &lt;- as.tibble(dd)</code></pre>
-<ol start="11" style="list-style-type: decimal">
-<li>Read the help file <code>help(&quot;%in%&quot;)</code>. Copy the following
-data frame into R.</li>
-</ol>
-<pre><code>students &lt;- data.frame(
-           major=c(&quot;Stat&quot;,&quot;Stat&quot;,&quot;Econ&quot;,&quot;Bus&quot;,&quot;Phys&quot;,&quot;ActSci&quot;,&quot;ActSci&quot;),
-           year=c(3,4,4,5,3,3,4))</code></pre>
-<p>Use <code>%in%</code> to create a logical vector of students who
-major in Stat or ActSci and use this to subset <code>students</code> to
-Stat or ActSci majors.</p>
+<pre class="r"><code>x &lt;- c(1,2,3,4,5,6,7,8,9,10)
+y &lt;- 1:10</code></pre>
+<p><strong>Solution</strong> Use <code>lobstr::obj_size()</code> to see
+that <code>x</code> is actually smaller! However, for vectors of length
+1 million <code>y</code> would be smaller. You can see this if, for
+example, you generate 1 million random numbers:</p>
+<pre class="r"><code># find size of x and y, one by one, with obj_size()
+lobstr::obj_size(x)</code></pre>
+<pre><code>## 176 B</code></pre>
+<pre class="r"><code>lobstr::obj_size(y)</code></pre>
+<pre><code>## 680 B</code></pre>
+<pre class="r"><code># output size of x and y simultaneously with obj_sizes(x,y)
+# note that: obj_size(x,y) = obj_size(x)+obj_size(y)
+lobstr::obj_sizes(x,y)</code></pre>
+<pre><code>## * 176 B
+## * 680 B</code></pre>
+<pre class="r"><code>x &lt;- rbinom(1e6,10,.5)
+y &lt;- 1:1e6
+lobstr::obj_sizes(x,y)</code></pre>
+<pre><code>## * 4.00 MB
+## *   680 B</code></pre>
 
 
 

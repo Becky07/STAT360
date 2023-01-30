@@ -12,7 +12,7 @@
 <meta name="author" content="Becky Lin" />
 
 
-<title>Lecture 02 exercise</title>
+<title>Week 4 exercises</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -355,80 +355,277 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Lecture 02 exercise</h1>
+<h1 class="title toc-ignore">Week 4 exercises</h1>
 <h4 class="author">Becky Lin</h4>
 
 </div>
 
 
+<div id="short-exercises-based-on-chapters-from-text" class="section level2">
+<h2>Short exercises based on chapters from text</h2>
 <ol style="list-style-type: decimal">
-<li>Predict the outcome of the following:</li>
+<li>Explain the output of the following code chunk.</li>
 </ol>
-<pre><code>c(1, FALSE)
-c(&quot;a&quot;,1)
-c(list(1),&quot;a&quot;)
-c(TRUE,1)
-c(FALSE,2L)
-typeof(c(1,2,3, NA))
-is.infinite(c(1,Inf,-Inf, NaN))
-is.nan(c(1,Inf,-Inf, NaN))
-typeof(c(&quot;hello&quot;,9L, TRUE)) </code></pre>
+<pre class="r"><code>f &lt;- function() {
+  fe &lt;- environment(f)
+  ee &lt;- environment()
+  pe &lt;- parent.env(ee)
+  list(fe=fe,ee=ee,pe=pe)
+}
+f()</code></pre>
+<pre><code>## $fe
+## &lt;environment: R_GlobalEnv&gt;
+## 
+## $ee
+## &lt;environment: 0x7fc7be218d28&gt;
+## 
+## $pe
+## &lt;environment: R_GlobalEnv&gt;</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li>Explain the result</li>
+<li>Read the help files on the <code>exists()</code> and
+<code>get()</code> functions. Explain the output of the following code
+chunk.</li>
 </ol>
-<pre class="{r}}"><code>1 == &quot;1&quot;
--1 &lt; FALSE
-&quot;one&quot; &lt; 2 </code></pre>
+<pre class="r"><code>f &lt;- function(xx) {
+  xx_parent &lt;- if(exists(&quot;xx&quot;,envir=environment(f))) {
+    get(&quot;xx&quot;,environment(f))
+  } else {
+    NULL
+  }
+  list(xx,xx_parent)
+}
+f(2)</code></pre>
+<pre><code>## [[1]]
+## [1] 2
+## 
+## [[2]]
+## NULL</code></pre>
+<pre class="r"><code>xx &lt;- 1
+f(2)</code></pre>
+<pre><code>## [[1]]
+## [1] 2
+## 
+## [[2]]
+## [1] 1</code></pre>
+<pre class="r"><code>rm(xx)</code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li><p>If <code>vv &lt;- list(a=1,b=2)</code>, why doesn’t
-<code>as.vector(vv)</code> work to coerce <code>vv</code> into an atomic
-vector?</p></li>
-<li><p>What do <code>dim()</code>, <code>nrow()</code> and
-<code>ncol()</code> return when applied to a 1-dimensional vector? What
-about <code>NROW()</code> or <code>NCOL()</code>?</p></li>
-<li><p>What is <code>dim(cbind(A,A))</code> if
-<code>A = matrix(1:4,2,2)</code>?</p></li>
-<li><p>What do the following return? Understand why.</p></li>
+<li>Write a function with argument <code>xx</code> that tests whether
+<code>xx</code> exists in the parent environment and, if so,
+<ol style="list-style-type: lower-alpha">
+<li>assigns the value of <code>xx</code> in the parent environment to
+the variable <code>xx_parent</code>, and</li>
+<li>tests whether <code>xx</code> and <code>xx_parent</code> are equal.
+If the test is FALSE, throw a warning to alert the user to the fact that
+the two are not equal.</li>
+</ol></li>
+<li>Write an infix version of <code>c()</code> that concatenates two
+vectors.</li>
 </ol>
-<pre><code>TRUE | FALSE
-c(TRUE,TRUE) &amp; c(FALSE,TRUE)
-c(TRUE,TRUE) &amp;&amp; c(FALSE,TRUE)</code></pre>
-<ol start="7" style="list-style-type: decimal">
-<li><p>What sort of object does <code>table()</code> return? What is its
-type? What attributes does it have? How does the dimensionality change
-as you tabulate more variables?</p></li>
-<li><p>What happens to a factor when you modify its levels? How do f2
-and f3 differ from f1?</p></li>
+</div>
+<div id="map-reduce" class="section level2">
+<h2>Map-Reduce</h2>
+<p>Refer to the Wikipedia page on algorithms for computing sample
+variances and covariances: <a href="https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance" class="uri">https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance</a>
+We will implement the two-pass algorithm for computing the sample
+variance as a Map-Reduce.</p>
+<ol style="list-style-type: decimal">
+<li>Use the following code chunk from the lecture 4 notes to simulate
+data in 10 chunks and calculate the overall sample mean.</li>
 </ol>
-<pre><code>f1 &lt;- factor(letters)
-levels(f1) &lt;- rev(levels(f1))
-f2 &lt;- rev(factor(letters))
-f3 &lt;- factor(letters, levels = rev(letters))</code></pre>
-<ol start="9" style="list-style-type: decimal">
-<li>Fix each of the following common data frame subsetting errors:</li>
+<pre class="r"><code>rfun &lt;- function(seed,n) { set.seed(seed); return(rnorm(n))}
+dat2 &lt;- lapply(1:10,rfun,n=1e5) 
+mfun2 &lt;- function(x) { return(data.frame(sum=sum(x),n=length(x))) }
+sumdat &lt;- lapply(dat2,mfun2)
+simple_reduce &lt;- function(x, f) { # Text section 9.5
+  out &lt;- x[[1]] 
+  for (i in seq(2, length(x))) {
+    out &lt;- f(out, x[[i]])
+  }
+  out
+}
+allres &lt;- simple_reduce(sumdat,rbind)
+my_mean &lt;- sum(allres[,&quot;sum&quot;])/sum(allres[,&quot;n&quot;]) # mean</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Write a function that takes a vector and <code>my_mean</code> as
+input and returns (i) the sum of squared deviations between the vector’s
+values and <code>my_mean</code> and (ii) the number of vector values
+(n).</p></li>
+<li><p>Use <code>lapply()</code> to call your function from (2) on each
+element of <code>dat2</code>.</p></li>
+<li><p>Use <code>simple_reduce()</code> to combine your results into a
+single data frame, and calculate the sample variance from this data
+frame. Compare your answer to <code>var(unlist(dat2))</code>.</p></li>
 </ol>
-<pre><code>mtcars[mtcars$cyl = 4, ]
-mtcars[-1:4, ]
-mtcars[mtcars$cyl &lt;= 5]
-mtcars[mtcars$cyl == 4 | 6, ]</code></pre>
-<ol start="10" style="list-style-type: decimal">
-<li>Consider the following data frame and tibble. Suppose you want to
-extract the number from the first row and first column and multiply this
-number by the vector <code>1:3</code>. How would you do this for the
-data frame? How would you do this for the tibble?</li>
+</div>
+<div id="recursive-partitioning" class="section level2">
+<h2>Recursive partitioning</h2>
+<ul>
+<li>The following code chunk is the start of an implementation of
+recursive partitioning using a binary tree data structure to store the
+partition.</li>
+<li>Binary trees can be implemented as a linked list of nodes that
+contain
+<ol style="list-style-type: decimal">
+<li>data</li>
+<li>a pointer to the left child</li>
+<li>a pointer to the right child</li>
+</ol></li>
+<li>For our recursive partitioning example, the data will be a region of
+the original covariate space and the response/covariate data in that
+region.</li>
+<li>The following code chunk establishes node and region data
+structure.</li>
+</ul>
+<pre class="r"><code># Constructor for the node data structure:
+new_node &lt;- function(data,childl=NULL,childr=NULL){
+  nn &lt;- list(data=data,childl=childl,childr=childr)
+  class(nn) &lt;- &quot;node&quot;
+  return(nn)
+}
+# The data stored in the node are a partition, or region of the 
+# covariate space. Constructor for region data structure:
+new_region &lt;- function(coords=NULL,x,y){
+  if(is.null(coords)) {
+    coords &lt;- sapply(x,range) # find range of each column in x
+  }
+  out &lt;- list(coords=coords,x=x,y=y)
+  class(out) &lt;- &quot;region&quot;
+  return(out)
+}</code></pre>
+<ul>
+<li>Some tests of the above constructors are given in the next code
+chunk.</li>
+</ul>
+<pre class="r"><code>set.seed(123); n &lt;- 10
+x &lt;- data.frame(x1=rnorm(n),x2=rnorm(n))
+y &lt;- rnorm(n)
+new_region(x=x,y=y)</code></pre>
+<pre><code>## $coords
+##             x1        x2
+## [1,] -1.265061 -1.966617
+## [2,]  1.715065  1.786913
+## 
+## $x
+##             x1         x2
+## 1  -0.56047565  1.2240818
+## 2  -0.23017749  0.3598138
+## 3   1.55870831  0.4007715
+## 4   0.07050839  0.1106827
+## 5   0.12928774 -0.5558411
+## 6   1.71506499  1.7869131
+## 7   0.46091621  0.4978505
+## 8  -1.26506123 -1.9666172
+## 9  -0.68685285  0.7013559
+## 10 -0.44566197 -0.4727914
+## 
+## $y
+##  [1] -1.0678237 -0.2179749 -1.0260044 -0.7288912 -0.6250393 -1.6866933
+##  [7]  0.8377870  0.1533731 -1.1381369  1.2538149
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;region&quot;</code></pre>
+<pre class="r"><code>new_node(new_region(x=x,y=y))</code></pre>
+<pre><code>## $data
+## $coords
+##             x1        x2
+## [1,] -1.265061 -1.966617
+## [2,]  1.715065  1.786913
+## 
+## $x
+##             x1         x2
+## 1  -0.56047565  1.2240818
+## 2  -0.23017749  0.3598138
+## 3   1.55870831  0.4007715
+## 4   0.07050839  0.1106827
+## 5   0.12928774 -0.5558411
+## 6   1.71506499  1.7869131
+## 7   0.46091621  0.4978505
+## 8  -1.26506123 -1.9666172
+## 9  -0.68685285  0.7013559
+## 10 -0.44566197 -0.4727914
+## 
+## $y
+##  [1] -1.0678237 -0.2179749 -1.0260044 -0.7288912 -0.6250393 -1.6866933
+##  [7]  0.8377870  0.1533731 -1.1381369  1.2538149
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;region&quot;
+## 
+## $childl
+## NULL
+## 
+## $childr
+## NULL
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;node&quot;</code></pre>
+<ul>
+<li>The recursive partitioning function is shown below. We’ll discuss
+this in class.</li>
+</ul>
+<pre class="r"><code>#---------------------------------------------------#
+# Recursive partitioning function.
+recpart &lt;- function(x,y){
+  init &lt;- new_node(new_region(x=x,y=y))
+  tree &lt;- recpart_recursive(init)
+  class(tree) &lt;- c(&quot;tree&quot;,class(tree))
+  return(tree)
+}
+recpart_recursive &lt;- function(node) {
+  R &lt;- node$data
+  # stop recursion if region has a single data point
+  if(length(R$y) == 1) { return(node) } # NB: was return(NULL)
+  # else find a split that minimizes a LOF criterion
+  # Initialize
+  lof_best  &lt;- Inf
+  # Loop over variables and splits
+  for(v in 1:ncol(R$x)){ 
+    tt &lt;- split_points(R$x[,v]) # Exercise: write split_points()
+    for(t in tt) { 
+      gdat &lt;- data.frame(y=R$y,x=as.numeric(R$x[,v] &lt;= t))
+      lof &lt;- LOF(y~.,gdat) # Exercise: write LOF()
+      if(lof &lt; lof_best) { 
+        lof_best &lt;- lof
+        childRs &lt;- split(R,xvar=v,spt=t) # Exercises: write split.region()
+      }
+    }
+  } 
+  # Call self on best split
+  node$childl &lt;- recpart_recursive(new_node(childRs$Rl))
+  node$childr &lt;- recpart_recursive(new_node(childRs$Rr))
+  return(node)
+}</code></pre>
+</div>
+<div id="exercises" class="section level2">
+<h2>Exercises</h2>
+<ol style="list-style-type: decimal">
+<li>Write <code>split_points()</code>. The function should take a vector
+of covariate values as input and return the sorted unique values. You
+will need to trim off the maximum unique value, because this can’t be
+used as a split point. (As yourself why not.) Write a snippet of R code
+that tests your function.</li>
+<li>Write the function <code>LOF()</code> that returns the lack-of-fit
+criterion for a model. The function should take a model formula and data
+frame as input, pass these to <code>lm()</code> and return the residual
+sum of squares. Write a snippet of R code that tests your function.</li>
+<li>Write <code>split.region()</code>. The function should take a region
+<code>R</code>, the variable to split on, <code>v</code>, and the split
+point, <code>t</code>, as arguments. Split the region into left and
+right partitions and return a list of two regions labelled
+<code>Rl</code> and <code>Rr</code>. Note: It is tempting to split the x
+and y data and calculate the coordinates matrix from the x’s, as the
+constructor does when not passed a coordinates matrix. However, this
+will leave gaps in the covariate space. (Ask yourself why.) Write a
+snippet of R code that tests your function.</li>
+<li>Run <code>recpart()</code> with your versions of
+<code>split_points()</code>, <code>LOF()</code> and
+<code>split.region()</code>. Use the test data <code>x</code> and
+<code>y</code> defined in the testing code chunk as input and save your
+output to an object called <code>testres</code>. The object will not
+print properly at this point. We will write a print method in lab 3. You
+do not need to check that the output is correct.</li>
 </ol>
-<pre><code>dd &lt;- data.frame(x=1:3,y=c(&quot;a&quot;,&quot;b&quot;,&quot;c))
-tt &lt;- as.tibble(dd)</code></pre>
-<ol start="11" style="list-style-type: decimal">
-<li>Read the help file <code>help(&quot;%in%&quot;)</code>. Copy the following
-data frame into R.</li>
-</ol>
-<pre><code>students &lt;- data.frame(
-           major=c(&quot;Stat&quot;,&quot;Stat&quot;,&quot;Econ&quot;,&quot;Bus&quot;,&quot;Phys&quot;,&quot;ActSci&quot;,&quot;ActSci&quot;),
-           year=c(3,4,4,5,3,3,4))</code></pre>
-<p>Use <code>%in%</code> to create a logical vector of students who
-major in Stat or ActSci and use this to subset <code>students</code> to
-Stat or ActSci majors.</p>
+</div>
 
 
 
