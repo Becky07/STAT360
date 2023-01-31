@@ -165,7 +165,7 @@ in that region.
 ```{r}
 # Constructor for the node data structure:
 new_node <- function(data,childl=NULL,childr=NULL){
-  nn <- list(data=data,childl=childl,childr=childr)
+  nn <- list(data=data,childl=childl,childr=childr) # note that input data is a list
   class(nn) <- "node"
   return(nn)
 }
@@ -173,7 +173,8 @@ new_node <- function(data,childl=NULL,childr=NULL){
 # covariate space. Constructor for region data structure:
 new_region <- function(coords=NULL,x,y){
   if(is.null(coords)) {
-    coords <- Reduce(cbind,lapply(x,range))
+    # find range for each column in x and column binding result
+    coords <- Reduce(cbind,lapply(x,range) )
   }
   out <- list(coords=coords,x=x,y=y)
   class(out) <- "region"
@@ -189,12 +190,13 @@ x <- data.frame(x1=rnorm(n),x2=rnorm(n))
 y <- rnorm(n)
 new_region(x=x,y=y)
 new_node(new_region(x=x,y=y))
+new_node(new_region(x=x,y=y))$data
 ```
 
 * The recursive partitioning function is shown below. We'll discuss
 this in class.
 
-```{r}
+```{r,cache=T}
 #---------------------------------------------------#
 # Recursive partitioning function.
 recpart <- function(x,y){
@@ -227,6 +229,7 @@ recpart_recursive <- function(node) {
   node$childr <- recpart_recursive(new_node(childRs$Rr))
   return(node)
 }
+
 ```
 
 ## Exercises
@@ -263,10 +266,19 @@ split_points <- function(x) {
   return(x)
 }
 
+testx <- c(2,4,2,3,7,7,5,5,8) # 9 elements with 6 unique values
+split_points(testx)
+
 LOF <- function(form,data) {
   ff <- lm(form,data)
   return(sum(residuals(ff)^2))
 }
+
+set.seed(360)
+xvar <- rnorm(20,1,1)
+yvar <- 1+2*xvar+rnorm(20,0,1)
+dxy <- as.data.frame(cbind(xvar=xvar,yvar=yvar))
+LOF(yvar~xvar,dxy)
 
 split.region <- function(R,xvar,spt){
   r1_ind <- (R$x[,xvar] <= spt)
@@ -277,6 +289,20 @@ split.region <- function(R,xvar,spt){
   return(list(Rl=Rl,Rr=Rr))
 }
 
+
+init <- new_node(new_region(x=x,y=y))
+init
+
 test <- recpart(x,y)
+test$childl$childl$childr
+test$childl$childl
+
+plot(test$data$x)
+dc = test$data$coords
+rect(dc[1,1],dc[1,2],dc[2,1],dc[2,2],border="red")
+dc = test$childl$childl$data$coords
+rect(dc[1,1],dc[1,2],dc[2,1],dc[2,2],border="blue")
+dc = test$childl$childr$data$coords
+rect(dc[1,1],dc[1,2],dc[2,1],dc[2,2],border="green")
 ```
 
