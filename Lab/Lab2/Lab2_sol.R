@@ -58,7 +58,7 @@ mars <- function(formula, data, control){
   return(bwd_out) 
 }
 
-bwd_stepwise <- function(bwd_in){ 
+bwd_stepwise <- function(bwd_in, data){ 
   bwd_list = step(bwd_in, data)
   return(bwd_list)
 }
