@@ -64,7 +64,7 @@ recpart_fwd <- function(y,x,Mmax){
       } # end loop over variables
     } # end loop over basis functions to split
     # save optimal (m, v, t) and update basis functions
-    mstar <- splits[M,1]; vstar <- splits[M,2]; tstart <- splits[M,3]
+    mstar <- splits[M,1]; vstar <- splits[M,2]; tstar <- splits[M,3]
     cat("[Info] best (m,v,t,lof): (",mstar,vstar,tstar,lof_best,")\n")
     B[,M+1] <- B[,mstar]*(x[,vstar]<=tstar) # 
     B[,mstar] <- B[,mstar]*(x[,vstar]>tstar)
