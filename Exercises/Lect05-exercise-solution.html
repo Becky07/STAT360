@@ -12,7 +12,7 @@
 <meta name="author" content="Becky Lin" />
 
 
-<title>Lecture 05 exercise</title>
+<title>Lecture 05 exercises solution</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -426,75 +426,97 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Lecture 05 exercise</h1>
+<h1 class="title toc-ignore">Lecture 05 exercises solution</h1>
 <h4 class="author">Becky Lin</h4>
 
 </div>
 
 
-<div id="recursive-partitioning-by-forward-selection" class="section level2">
-<h2>Recursive partitioning by forward selection</h2>
+<div id="i.-recursive-partitioning-by-forward-selection" class="section level2">
+<h2>I. Recursive partitioning by forward selection</h2>
 <ul>
 <li><p>In this exercise you will write a version of recursive
 partitioning by forward selection following Algorithm 1 of Friedman
 (1991), with a few notational changes that will make the transition to
 the MARS forward selection algorithm easier.</p></li>
-<li><p>The following code gives the framework for the function
-<code>recpart_fwd()</code>. You are asked to write several of the
-support functions described below the code chunk.</p></li>
-<li><p>You need to understand <code>recpart_fwd()</code> so that you can
-modify it to the MARS forward stepwise algorithm.</p></li>
+<li><p>The following code gives the framework for the function. You are
+asked to write several of the support functions described below the code
+chunk.</p></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>recpart_fwd <span class="ot">&lt;-</span> <span class="cf">function</span>(y,x,Mmax){</span>
 <span id="cb1-2"><a href="#cb1-2"></a>  <span class="co">#---------------------------------------------------</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>  <span class="co"># Error checking for Mmax:(write your code below)</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="co"># ...</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="co">#---------------------------------------------------</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="co"># Initialize:</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>  N <span class="ot">&lt;-</span> <span class="fu">length</span>(y) <span class="co"># sample size</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>  n <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x) <span class="co"># number of predictors = number of X</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>  <span class="co"># B: a data frame with optimal basis function as columns</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>  B <span class="ot">&lt;-</span> <span class="fu">init_B</span>(N,Mmax) <span class="co"># Exercise: write init_B()</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>  <span class="co"># splits: a data frame records all the optimal (m, v, t):</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a>  <span class="co"># m: parent basis func to split, v: splitting var, t: splitting point</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a>  splits <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">m=</span><span class="fu">rep</span>(<span class="cn">NA</span>,Mmax),<span class="at">v=</span><span class="fu">rep</span>(<span class="cn">NA</span>,Mmax),<span class="at">t=</span><span class="fu">rep</span>(<span class="cn">NA</span>,Mmax))</span>
-<span id="cb1-14"><a href="#cb1-14"></a>  <span class="co">#</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a>  <span class="co">#---------------------------------------------------</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a>  <span class="co"># Looping for forward selection:</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a>  <span class="cf">for</span>(M <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Mmax) { <span class="co"># contrast to indexing 2...Mmax in Friedman</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a>    lof_best <span class="ot">&lt;-</span> <span class="cn">Inf</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a>    <span class="cf">for</span>(m <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>M) { <span class="co"># choose a basis function to split</span></span>
-<span id="cb1-20"><a href="#cb1-20"></a>      <span class="cf">for</span>(v <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){ <span class="co"># select a variable to split on</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a>        tt <span class="ot">&lt;-</span> <span class="fu">split_points</span>(x[,v],B[,m]) <span class="co"># Exercise: write split_points() </span></span>
-<span id="cb1-22"><a href="#cb1-22"></a>        <span class="cf">for</span>(t <span class="cf">in</span> tt) { </span>
-<span id="cb1-23"><a href="#cb1-23"></a>          Bnew <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(B[,(<span class="dv">1</span><span class="sc">:</span>M)[<span class="sc">-</span>m]], <span class="co"># drop m-th col: B[,-m]</span></span>
-<span id="cb1-24"><a href="#cb1-24"></a>                             <span class="co"># replace parent B[,m] with Btem1,Btem2</span></span>
-<span id="cb1-25"><a href="#cb1-25"></a>                             <span class="at">Btem1=</span>B[,m]<span class="sc">*</span>(x[,v]<span class="sc">&gt;</span>t), </span>
-<span id="cb1-26"><a href="#cb1-26"></a>                             <span class="at">Btem2=</span>B[,m]<span class="sc">*</span>(x[,v]<span class="sc">&lt;=</span>t)) </span>
-<span id="cb1-27"><a href="#cb1-27"></a>          gdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">y=</span>y,Bnew)</span>
-<span id="cb1-28"><a href="#cb1-28"></a>          lof <span class="ot">&lt;-</span> <span class="fu">LOF</span>(y<span class="sc">~</span>.,gdat) <span class="co">#  Use your LOF() from week 4</span></span>
-<span id="cb1-29"><a href="#cb1-29"></a>          <span class="cf">if</span>(lof <span class="sc">&lt;</span> lof_best) { </span>
-<span id="cb1-30"><a href="#cb1-30"></a>            lof_best <span class="ot">&lt;-</span> lof</span>
-<span id="cb1-31"><a href="#cb1-31"></a>            splits[M,] <span class="ot">&lt;-</span> <span class="fu">c</span>(m,v,t) </span>
-<span id="cb1-32"><a href="#cb1-32"></a>          } <span class="co"># end if</span></span>
-<span id="cb1-33"><a href="#cb1-33"></a>        } <span class="co"># end loop over splits</span></span>
-<span id="cb1-34"><a href="#cb1-34"></a>      } <span class="co"># end loop over variables</span></span>
-<span id="cb1-35"><a href="#cb1-35"></a>    } <span class="co"># end loop over basis functions to split</span></span>
-<span id="cb1-36"><a href="#cb1-36"></a>    <span class="co"># save optimal (m, v, t) and update basis functions</span></span>
-<span id="cb1-37"><a href="#cb1-37"></a>    mstar <span class="ot">&lt;-</span> splits[M,<span class="dv">1</span>]; vstar <span class="ot">&lt;-</span> splits[M,<span class="dv">2</span>]; tstar <span class="ot">&lt;-</span> splits[M,<span class="dv">3</span>]</span>
-<span id="cb1-38"><a href="#cb1-38"></a>    <span class="fu">cat</span>(<span class="st">&quot;[Info] best (m,v,t,lof): (&quot;</span>,mstar,vstar,tstar,lof_best,<span class="st">&quot;)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb1-39"><a href="#cb1-39"></a>    B[,M<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> B[,mstar]<span class="sc">*</span>(x[,vstar]<span class="sc">&lt;=</span>tstar) <span class="co"># </span></span>
-<span id="cb1-40"><a href="#cb1-40"></a>    B[,mstar] <span class="ot">&lt;-</span> B[,mstar]<span class="sc">*</span>(x[,vstar]<span class="sc">&gt;</span>tstar)</span>
-<span id="cb1-41"><a href="#cb1-41"></a>  } <span class="co"># end loop over M</span></span>
-<span id="cb1-42"><a href="#cb1-42"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">B=</span>B,<span class="at">splits=</span>splits))</span>
-<span id="cb1-43"><a href="#cb1-43"></a>}</span>
-<span id="cb1-44"><a href="#cb1-44"></a></span>
-<span id="cb1-45"><a href="#cb1-45"></a>LOF <span class="ot">&lt;-</span> <span class="cf">function</span>(form,data) {</span>
-<span id="cb1-46"><a href="#cb1-46"></a>  ff <span class="ot">&lt;-</span> <span class="fu">lm</span>(form,data)</span>
-<span id="cb1-47"><a href="#cb1-47"></a>  <span class="fu">return</span>(<span class="fu">sum</span>(<span class="fu">residuals</span>(ff)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="co"># Error checking for Mmax:if Mmax&lt;2, throw a warning</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="co">#                         and set it to 2</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="co">#</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="cf">if</span>(Mmax<span class="sc">&lt;</span><span class="dv">2</span>) {</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="fu">warning</span>(<span class="st">&quot;Input Mmax must be &gt;= 2; setting to 2&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    Mmax <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>  }</span>
+<span id="cb1-10"><a href="#cb1-10"></a>  <span class="co">#---------------------------------------------------</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>  <span class="co"># Initialize:</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>  N <span class="ot">&lt;-</span> <span class="fu">length</span>(y) <span class="co"># sample size</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>  n <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x) <span class="co"># number of predictors = number of X</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>  <span class="co"># B: a data frame with optimal basis function as columns</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>  B <span class="ot">&lt;-</span> <span class="fu">init_B</span>(N,Mmax) <span class="co"># initiate B dataframe</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>  <span class="co"># splits: a data frame records all the optimal (m, v, t):</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>  <span class="co"># m: parent basis func to split, v: splitting var, t: splitting point</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>  splits <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">m=</span><span class="fu">rep</span>(<span class="cn">NA</span>,Mmax),<span class="at">v=</span><span class="fu">rep</span>(<span class="cn">NA</span>,Mmax),<span class="at">t=</span><span class="fu">rep</span>(<span class="cn">NA</span>,Mmax))</span>
+<span id="cb1-19"><a href="#cb1-19"></a>  <span class="co">#</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>  <span class="co">#---------------------------------------------------</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>  <span class="co"># Looping for forward selection:</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>  <span class="cf">for</span>(M <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Mmax) { <span class="co"># contrast to indexing 2...Mmax in Friedman</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a>    lof_best <span class="ot">&lt;-</span> <span class="cn">Inf</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>    <span class="cf">for</span>(m <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>M) { <span class="co"># choose a basis function to split</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a>      <span class="cf">for</span>(v <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){ <span class="co"># select a variable to split on</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>        tt <span class="ot">&lt;-</span> <span class="fu">split_points</span>(x[,v],B[,m]) <span class="co"># Exercise: write split_points() </span></span>
+<span id="cb1-27"><a href="#cb1-27"></a>        <span class="cf">for</span>(t <span class="cf">in</span> tt) { </span>
+<span id="cb1-28"><a href="#cb1-28"></a>          Bnew <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(B[,(<span class="dv">1</span><span class="sc">:</span>M)[<span class="sc">-</span>m]], <span class="co"># drop m-th col: B[,-m]</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a>                             <span class="co"># replace parent B[,m] with Btem1,Btem2</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a>                             <span class="at">Btem1=</span>B[,m]<span class="sc">*</span>(x[,v]<span class="sc">&gt;</span>t), </span>
+<span id="cb1-31"><a href="#cb1-31"></a>                             <span class="at">Btem2=</span>B[,m]<span class="sc">*</span>(x[,v]<span class="sc">&lt;=</span>t)) </span>
+<span id="cb1-32"><a href="#cb1-32"></a>          gdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">y=</span>y,Bnew)</span>
+<span id="cb1-33"><a href="#cb1-33"></a>          lof <span class="ot">&lt;-</span> <span class="fu">LOF</span>(y<span class="sc">~</span>.,gdat) <span class="co">#  Use your LOF() from week 4</span></span>
+<span id="cb1-34"><a href="#cb1-34"></a>          <span class="cf">if</span>(lof <span class="sc">&lt;</span> lof_best) { </span>
+<span id="cb1-35"><a href="#cb1-35"></a>            lof_best <span class="ot">&lt;-</span> lof</span>
+<span id="cb1-36"><a href="#cb1-36"></a>            splits[M,] <span class="ot">&lt;-</span> <span class="fu">c</span>(m,v,t) </span>
+<span id="cb1-37"><a href="#cb1-37"></a>          } <span class="co"># end if</span></span>
+<span id="cb1-38"><a href="#cb1-38"></a>        } <span class="co"># end loop over splits</span></span>
+<span id="cb1-39"><a href="#cb1-39"></a>      } <span class="co"># end loop over variables</span></span>
+<span id="cb1-40"><a href="#cb1-40"></a>    } <span class="co"># end loop over basis functions to split</span></span>
+<span id="cb1-41"><a href="#cb1-41"></a>    <span class="co"># save optimal (m, v, t) and update basis functions</span></span>
+<span id="cb1-42"><a href="#cb1-42"></a>    mstar <span class="ot">&lt;-</span> splits[M,<span class="dv">1</span>]; vstar <span class="ot">&lt;-</span> splits[M,<span class="dv">2</span>]; tstar <span class="ot">&lt;-</span> splits[M,<span class="dv">3</span>]</span>
+<span id="cb1-43"><a href="#cb1-43"></a>    <span class="fu">cat</span>(<span class="st">&quot;[Info] best (m,v,t,lof): (&quot;</span>,mstar,vstar,tstar,lof_best,<span class="st">&quot;)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb1-44"><a href="#cb1-44"></a>    B[,M<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> B[,mstar]<span class="sc">*</span>(x[,vstar]<span class="sc">&lt;=</span>tstar) <span class="co"># </span></span>
+<span id="cb1-45"><a href="#cb1-45"></a>    B[,mstar] <span class="ot">&lt;-</span> B[,mstar]<span class="sc">*</span>(x[,vstar]<span class="sc">&gt;</span>tstar)</span>
+<span id="cb1-46"><a href="#cb1-46"></a>  } <span class="co"># end loop over M</span></span>
+<span id="cb1-47"><a href="#cb1-47"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">B=</span>B,<span class="at">splits=</span>splits))</span>
 <span id="cb1-48"><a href="#cb1-48"></a>}</span>
 <span id="cb1-49"><a href="#cb1-49"></a></span>
-<span id="cb1-50"><a href="#cb1-50"></a><span class="co">#-------------------------------------</span></span></code></pre></div>
+<span id="cb1-50"><a href="#cb1-50"></a>LOF <span class="ot">&lt;-</span> <span class="cf">function</span>(form,data) {</span>
+<span id="cb1-51"><a href="#cb1-51"></a>  ff <span class="ot">&lt;-</span> <span class="fu">lm</span>(form,data)</span>
+<span id="cb1-52"><a href="#cb1-52"></a>  <span class="fu">return</span>(<span class="fu">sum</span>(<span class="fu">residuals</span>(ff)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb1-53"><a href="#cb1-53"></a>}</span>
+<span id="cb1-54"><a href="#cb1-54"></a></span>
+<span id="cb1-55"><a href="#cb1-55"></a><span class="co">#-------------------------------------</span></span>
+<span id="cb1-56"><a href="#cb1-56"></a><span class="co"># Exercise Solutions are from here down</span></span>
+<span id="cb1-57"><a href="#cb1-57"></a></span>
+<span id="cb1-58"><a href="#cb1-58"></a>init_B <span class="ot">&lt;-</span> <span class="cf">function</span>(N,Mmax) {</span>
+<span id="cb1-59"><a href="#cb1-59"></a>  <span class="co"># Input: N- # of rows; Mmax: # of basis funcs</span></span>
+<span id="cb1-60"><a href="#cb1-60"></a>  <span class="co"># output: a N by (Mmax+1) dataframe</span></span>
+<span id="cb1-61"><a href="#cb1-61"></a>  B <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="fu">matrix</span>(<span class="cn">NA</span>,<span class="at">nrow=</span>N,<span class="at">ncol=</span>(Mmax<span class="sc">+</span><span class="dv">1</span>)) )</span>
+<span id="cb1-62"><a href="#cb1-62"></a>  B[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># first column for intercept: B0</span></span>
+<span id="cb1-63"><a href="#cb1-63"></a>  <span class="fu">names</span>(B) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;B0&quot;</span>,<span class="fu">paste0</span>(<span class="st">&quot;B&quot;</span>,<span class="dv">1</span><span class="sc">:</span>Mmax))</span>
+<span id="cb1-64"><a href="#cb1-64"></a>  <span class="fu">return</span>(B)</span>
+<span id="cb1-65"><a href="#cb1-65"></a>}</span>
+<span id="cb1-66"><a href="#cb1-66"></a></span>
+<span id="cb1-67"><a href="#cb1-67"></a>split_points <span class="ot">&lt;-</span> <span class="cf">function</span>(xv,Bm) {</span>
+<span id="cb1-68"><a href="#cb1-68"></a>  <span class="co"># input: xv: a variable xv to split</span></span>
+<span id="cb1-69"><a href="#cb1-69"></a>  <span class="co">#        Bm: a parent basis func to split</span></span>
+<span id="cb1-70"><a href="#cb1-70"></a>  <span class="co"># output: feasible splitting points</span></span>
+<span id="cb1-71"><a href="#cb1-71"></a>  <span class="co">#</span></span>
+<span id="cb1-72"><a href="#cb1-72"></a>  out <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(xv[Bm<span class="sc">&gt;</span><span class="dv">0</span>]))</span>
+<span id="cb1-73"><a href="#cb1-73"></a>  <span class="fu">return</span>(out[<span class="sc">-</span><span class="fu">length</span>(out)])</span>
+<span id="cb1-74"><a href="#cb1-74"></a>}</span></code></pre></div>
 <p>Exercises:</p>
 <ol style="list-style-type: decimal">
 <li>Write a code snippet that checks whether the input <code>Mmax</code>
@@ -508,28 +530,77 @@ all others, and column names B0,B1,…,BMmax.</li>
 one you wrote in the week 4 exercises. Here we take predictor variable
 <span class="math inline">\(x_v\)</span>, and basis function <span class="math inline">\(B_m\)</span> as input. The eligible split points
 are <span class="math inline">\(x_v\)</span> values such that basis
-function <span class="math inline">\(B_m(x)&gt;0\)</span>.That is, first
-you need to take out <span class="math inline">\(x_v\)</span> values at
-which <span class="math inline">\(B_m &gt;0\)</span>, then return
-ordered unique values of all taking out <span class="math inline">\(x_v\)</span>, and remember to exclude the largest
-possible value.</li>
-<li>Test <code>recpart_fwd(y,x,Mmax=2)</code>, with your functions from
-the exercises, runs on the following test data. These are the same as in
-the week 4 exercises. See if you can find these first two splits on the
-drawing from week 4:</li>
+function <span class="math inline">\(B_m(x)&gt;0\)</span>. Return
+ordered unique values, and remember to exclude the largest possible
+value.</li>
+<li>Test that <code>recpart_fwd(y,x,Mmax=2)</code>, with your functions
+from the exercises, runs on the following test data. These are the same
+as in the week 4 exercises. See if you can find these first two splits
+on the drawing from week 4:</li>
 </ol>
 <p><a href="exrecpart.png">image</a></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>); n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>x <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1=</span><span class="fu">rnorm</span>(n),<span class="at">x2=</span><span class="fu">rnorm</span>(n))</span>
-<span id="cb2-3"><a href="#cb2-3"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#rp2 &lt;- recpart_fwd(y,x,Mmax=2)</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#rp2</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># try Mmax=9</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#rp &lt;- recpart_fwd(y,x,Mmax=9)</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#rp</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>); n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1=</span><span class="fu">rnorm</span>(n),<span class="at">x2=</span><span class="fu">rnorm</span>(n))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>rp2 <span class="ot">&lt;-</span> <span class="fu">recpart_fwd</span>(y,x,<span class="at">Mmax=</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [Info] best (m,v,t,lof): ( 1 2 0.4978505 4.531442 )
+## [Info] best (m,v,t,lof): ( 2 1 -0.445662 2.939541 )</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rp2</span></code></pre></div>
+<pre><code>## $B
+##    B0 B1 B2
+## 1   1  0  0
+## 2   0  1  0
+## 3   0  1  0
+## 4   0  1  0
+## 5   0  1  0
+## 6   1  0  0
+## 7   0  1  0
+## 8   0  0  1
+## 9   1  0  0
+## 10  0  0  1
+## 
+## $splits
+##   m v          t
+## 1 1 2  0.4978505
+## 2 2 1 -0.4456620</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># try Mmax=9</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">recpart_fwd</span>(y,x,<span class="at">Mmax=</span><span class="dv">9</span>)</span></code></pre></div>
+<pre><code>## [Info] best (m,v,t,lof): ( 1 2 0.4978505 4.531442 )
+## [Info] best (m,v,t,lof): ( 2 1 -0.445662 2.939541 )
+## [Info] best (m,v,t,lof): ( 2 2 0.4007715 1.169976 )
+## [Info] best (m,v,t,lof): ( 3 1 -1.265061 0.56449 )
+## [Info] best (m,v,t,lof): ( 4 1 -0.2301775 0.3162307 )
+## [Info] best (m,v,t,lof): ( 1 1 -0.5604756 0.0890835 )
+## [Info] best (m,v,t,lof): ( 4 1 0.1292877 0.00786459 )
+## [Info] best (m,v,t,lof): ( 8 1 0.07050839 0.002471975 )
+## [Info] best (m,v,t,lof): ( 7 1 -0.6868529 0 )</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rp</span></code></pre></div>
+<pre><code>## $B
+##    B0 B1 B2 B3 B4 B5 B6 B7 B8 B9
+## 1   0  0  0  0  0  0  1  0  0  0
+## 2   0  0  0  0  0  1  0  0  0  0
+## 3   0  0  0  1  0  0  0  0  0  0
+## 4   0  0  0  0  0  0  0  0  1  0
+## 5   0  0  0  0  0  0  0  1  0  0
+## 6   1  0  0  0  0  0  0  0  0  0
+## 7   0  1  0  0  0  0  0  0  0  0
+## 8   0  0  0  0  1  0  0  0  0  0
+## 9   0  0  0  0  0  0  0  0  0  1
+## 10  0  0  1  0  0  0  0  0  0  0
+## 
+## $splits
+##   m v           t
+## 1 1 2  0.49785048
+## 2 2 1 -0.44566197
+## 3 2 2  0.40077145
+## 4 3 1 -1.26506123
+## 5 4 1 -0.23017749
+## 6 1 1 -0.56047565
+## 7 4 1  0.12928774
+## 8 8 1  0.07050839
+## 9 7 1 -0.68685285</code></pre>
 <ul>
-<li>You will create tests of your implementation in lab 4.</li>
+<li>You will create further tests of your implementation in lab 3.</li>
 </ul>
 </div>
 

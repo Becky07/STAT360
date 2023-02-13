@@ -1,5 +1,5 @@
 ---
-title: "Lecture 05 exercise"
+title: "Lecture 05 exercises solution"
 author: "Becky Lin"
 output: 
   html_document:
@@ -7,10 +7,10 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,attr.source='.numberLines')
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Recursive partitioning by forward selection
+## I. Recursive partitioning by forward selection
 
 * In this exercise you will write a version of 
 recursive partitioning by forward selection
@@ -19,27 +19,28 @@ a few notational changes that will make
 the transition to the MARS forward selection 
 algorithm easier.
 
-* The following code gives the framework for the function
-`recpart_fwd()`.
+* The following code gives the framework for the function.
 You are asked to write several of the support 
 functions described below the code chunk.
 
-* You need to understand `recpart_fwd()` so that you 
-can modify it to the MARS forward stepwise algorithm. 
 
 
-
-```{r}
+```{r,attr.source='.numberLines'}
 recpart_fwd <- function(y,x,Mmax){
   #---------------------------------------------------
-  # Error checking for Mmax:(write your code below)
-  # ...
+  # Error checking for Mmax:if Mmax<2, throw a warning
+  #                         and set it to 2
+  #
+  if(Mmax<2) {
+    warning("Input Mmax must be >= 2; setting to 2")
+    Mmax <- 2
+  }
   #---------------------------------------------------
   # Initialize:
   N <- length(y) # sample size
   n <- ncol(x) # number of predictors = number of X
   # B: a data frame with optimal basis function as columns
-  B <- init_B(N,Mmax) # Exercise: write init_B()
+  B <- init_B(N,Mmax) # initiate B dataframe
   # splits: a data frame records all the optimal (m, v, t):
   # m: parent basis func to split, v: splitting var, t: splitting point
   splits <- data.frame(m=rep(NA,Mmax),v=rep(NA,Mmax),t=rep(NA,Mmax))
@@ -80,6 +81,25 @@ LOF <- function(form,data) {
 }
 
 #-------------------------------------
+# Exercise Solutions are from here down
+
+init_B <- function(N,Mmax) {
+  # Input: N- # of rows; Mmax: # of basis funcs
+  # output: a N by (Mmax+1) dataframe
+  B <- data.frame( matrix(NA,nrow=N,ncol=(Mmax+1)) )
+  B[,1] <- 1 # first column for intercept: B0
+  names(B) <- c("B0",paste0("B",1:Mmax))
+  return(B)
+}
+
+split_points <- function(xv,Bm) {
+  # input: xv: a variable xv to split
+  #        Bm: a parent basis func to split
+  # output: feasible splitting points
+  #
+  out <- sort(unique(xv[Bm>0]))
+  return(out[-length(out)])
+}
 ```
 
 Exercises:
@@ -94,11 +114,10 @@ all others, and column names B0,B1,...,BMmax.
 3. Write `split_points()`. This one is different from the 
 one you wrote in the week 4 exercises. Here we take predictor
 variable $x_v$, and basis function $B_m$ as input. The eligible split 
-points are $x_v$ values such that basis function $B_m(x)>0$.That is, first
-you need to take out $x_v$ values at which $B_m >0$, then 
-return ordered unique values of all taking out $x_v$, and remember to exclude the 
+points are $x_v$ values such that basis function $B_m(x)>0$.
+Return ordered unique values, and remember to exclude the 
 largest possible value.
-4. Test `recpart_fwd(y,x,Mmax=2)`, with your functions from 
+4. Test that `recpart_fwd(y,x,Mmax=2)`, with your functions from 
 the exercises, runs on the following test data. 
 These are the same as in the week 4 exercises.
 See if you can find these first two splits on the drawing from week 4: 
@@ -109,13 +128,14 @@ See if you can find these first two splits on the drawing from week 4:
 set.seed(123); n <- 10
 x <- data.frame(x1=rnorm(n),x2=rnorm(n))
 y <- rnorm(n)
-#rp2 <- recpart_fwd(y,x,Mmax=2)
-#rp2
+rp2 <- recpart_fwd(y,x,Mmax=2)
+rp2
 
 # try Mmax=9
-#rp <- recpart_fwd(y,x,Mmax=9)
-#rp
+rp <- recpart_fwd(y,x,Mmax=9)
+rp
 ```
 
 
-* You will create tests of your implementation in lab 4.
+* You will create further tests of your implementation in lab 3.
+
