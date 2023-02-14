@@ -268,6 +268,21 @@ as `R CMD check` from the command line.
 # install()
 ```
 
+## Implementation of an R package recap
+
+\small 
+
+1. call `create_package()` to initialize an R package directory and a new project. 
+2. Copy your R scripts to the R directory of your new package and call `load_all()` to load them into your R session.
+3. call `devtools::check()` to check that the package builds.
+4. edit the DESCRIPTION file
+5. add a licence
+6. start your documentation by inserting an Roxygen skeleton for your main `mars()` function then fill in your title, function arguments, return value,examples and any import you require.
+7. call `document()` to generate an.Rd file and update NAMESPACE
+8. call `use_package()` to add any package dependencies/imports to DESCRIPTION
+9. call `devtools::check()` again to make sure the package will still build
+10. copy your R package files to the directory under version control for your course project, then commit the new files and push them to the GitHub repo. 
+
 ## Topics not covered
 
 * You have enough to get you started, but you will need to learn more
