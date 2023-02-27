@@ -121,7 +121,7 @@ existing R project or be under version control.
 ```{r}
 # install.packages("devtools")
 library(devtools)
-create_package("/Users/bwl/STAT360")
+create_package("/Users/bwl/mypackages/MARS")
 ```
 
 ## Start your R source files

@@ -63,7 +63,7 @@ of function calls ("call stack") that lead to the error.
     * The numbers appended to each entry are the line numbers of the
     function call in the (parent) calling function, but they usually just confuse me ...
 
-\small
+\tiny
 
 ```{r}
 f <- function(x) { g(h(x)) }
@@ -75,6 +75,14 @@ h <- function(x) {
 }
 #f("cat") # uncomment to run
 #traceback()
+
+#> f("cat")
+#Error in h(x) : x must be numeric
+#> traceback()
+#4: stop("x must be numeric") at #2
+#3: h(x) at #2
+#2: g(h(x)) at #1
+#1: f("cat")
 ```
 
 
@@ -282,6 +290,10 @@ lb <- mark(
 )
 lb
 ```
+
+- ns = nanosecond = one billionth of a second = 1/$10^12$ of a second.
+- us = $\mu$s = microsecond =  one millionth of a second 
+- ms = millisecond = one thousandth of one second 
 
 ##
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.20)  13 FEB 2023 16:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.20)  13 FEB 2023 22:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1027,14 +1027,17 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 \openout4 = `Lecture06.vrb'.
 
 (./Lecture06.vrb
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <6> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 22.
 ) [7
 
 ]
 \openout4 = `Lecture06.vrb'.
 
-(./Lecture06.vrb) [8
+(./Lecture06.vrb
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 21.
+) [8
 
 ]
 \openout4 = `Lecture06.vrb'.
@@ -1106,20 +1109,29 @@ LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line
 38.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)) [22
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 43.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 43.
+)
+Overfull \vbox (1.77689pt too high) detected at line 657
+ []
+
+[22
 
 ]
 \openout4 = `Lecture06.vrb'.
 
 (./Lecture06.vrb
-<Lecture06_files/figure-beamer/unnamed-chunk-11-1.pdf, id=165, 714.67pt x 493.8
-45pt>
+<Lecture06_files/figure-beamer/unnamed-chunk-11-1.pdf, id=167, 712.6625pt x 493
+.845pt>
 File: Lecture06_files/figure-beamer/unnamed-chunk-11-1.pdf Graphic file (type p
 df)
 <use Lecture06_files/figure-beamer/unnamed-chunk-11-1.pdf>
 Package pdftex.def Info: Lecture06_files/figure-beamer/unnamed-chunk-11-1.pdf  
 used on input line 15.
-(pdftex.def)             Requested size: 307.2912pt x 212.34166pt.
+(pdftex.def)             Requested size: 307.2871pt x 212.93697pt.
 ) [23
 
  <./Lecture06_files/figure-beamer/unnamed-chunk-11-1.pdf>]
@@ -1141,32 +1153,33 @@ used on input line 15.
 
 (./Lecture06.aux) ) 
 Here is how much of TeX's memory you used:
- 25006 strings out of 478268
- 482219 string characters out of 5846347
- 761979 words of memory out of 5000000
- 42464 multiletter control sequences out of 15000+600000
- 542761 words of font info for 133 fonts, out of 8000000 for 9000
+ 25038 strings out of 478268
+ 482686 string characters out of 5846347
+ 763979 words of memory out of 5000000
+ 42484 multiletter control sequences out of 15000+600000
+ 550501 words of font info for 145 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,11n,122p,1006b,518s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts
-1.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/lo
-cal/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texliv
+{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ma
+thit.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr
+/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local/texliv
 e/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}</usr/local/texlive/2022/tex
 mf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2022/texmf-dist/fo
-nts/type1/public/lm/lmss10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/
-public/lm/lmss12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/
-lmss8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
-</usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/loca
-l/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/
-2022/texmf-dist/fonts/type1/public/lm/lmtt12.pfb></usr/local/texlive/2022/texmf
--dist/fonts/type1/public/lm/lmtt8.pfb></usr/local/texlive/2022/texmf-dist/fonts
-/type1/public/lm/lmtt9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/publ
-ic/lm/lmtti10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfon
-ts/symbols/msam10.pfb>
-Output written on Lecture06.pdf (25 pages, 251648 bytes).
+nts/type1/public/lm/lmmi9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/p
+ublic/lm/lmss10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/l
+mss12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmss8.pfb><
+/usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmss9.pfb></usr/local/
+texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/20
+22/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2022/texmf-d
+ist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/
+type1/public/lm/lmtt12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/publ
+ic/lm/lmtt8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt9
+.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></us
+r/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on Lecture06.pdf (25 pages, 275512 bytes).
 PDF statistics:
- 275 PDF objects out of 1000 (max. 8388607)
- 211 compressed objects within 3 object streams
+ 285 PDF objects out of 1000 (max. 8388607)
+ 217 compressed objects within 3 object streams
  74 named destinations out of 1000 (max. 500000)
- 43072 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 47168 words of extra memory for PDF output out of 51595 (max. 10000000)
 
