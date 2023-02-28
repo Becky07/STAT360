@@ -6,7 +6,7 @@ output:
   beamer_presentation:
     includes:
       in_header: header_pagenum.tex
-    toc: true
+    toc: false
 ---
 
 ## Introduction to object-oriented programming (OOP) in R
@@ -41,7 +41,7 @@ a little OOP.
     "functional" OOP. 
     * RC and R6 are traditional "encapsulated" OOP systems that
     looks less familiar to R users but more familiar to programmers 
-    from OO languages
+    from OO languages (eg, java, Python, C++, c\#, Ruby  and etc).
     * S4 is a more formal version of S3
 * Our goal is to learn a little about each style so that we can 
 understand code written by others.
@@ -49,6 +49,7 @@ understand code written by others.
     * Our MARS function will output an S3 object, and we will write
     print, summary, plot and other methods to make the interface
     familiar to R users.
+    
 
 ## Why use S3?
 
@@ -62,10 +63,20 @@ understand code written by others.
     can formalize your OOP then.
 * It "looks like R"
 
+
+## A quick intro to OO systems
+
+* An OOP system makes it possible for any developer to extend the interface with implementations for new types of input. 
+* OO Systems call the type of an object its **class** (a class defines what an object is).
+* An implementation for a specific class is called a **method** (methods decribe what the object can do).
+* Class are organized in a hierarchy so that if a method doesn't exist for one class, its parent's method is used, the and the child is said to **inherit** behavior. Eg. a GLM model inherits from a linear model. 
+* The process of finding the correct method given a class is called **method dispatch**. 
+
+
 ## Terminology: polymporhism and encapsulation
 
-* **polymorphism:** As we've seen, functions like plot are generic and behave differently
-when given different inputs; this is called polymorphism.
+* **polymorphism** (literally: many shpaes): As we've seen, functions like plot are generic and behave differently
+when given different inputs; this is called polymorphism. Another example, summary() for either numeric or factor variables.
 * **encapsulation:** We hide the details of an object behind an
 interface.
     * Encapsulated OOP formally bundles data and methods used to
@@ -110,11 +121,10 @@ class(ff)
 ## Base objects vs OO objects
 
 * We have been using "object" to describe
-data and functions in R in general.
-* Now distinguish between "base" objects, such as numeric vectors,
-and OO objects that have a class attribute.
+data and functions in R in general, but not all objects are object-oriented.
+* Technically, the difference between base and OO objects is that OO objects have a “class” attribute:
 
-![Objects](img/obj.png){width=30%}
+![Objects](img/obj.png){width=25%}
 
 \scriptsize
 
@@ -138,9 +148,9 @@ is.object(ff)
 
 ## Base types
 
-* Recall that base objects have a type that you can 
+* Recall that base objects have a base type that you can 
 discover with `typeof()`. 
-* There are 25 base types. 
+* There are 25 base types 
 * These types describe the underlying implementation of the
 base object in memory, and functions that behave differently 
 for different base types are coded with switch statements.
@@ -185,15 +195,31 @@ s3_class(f) # from sloop
 * Use `class()` to set the class after the object
 has been created, or use `structure()`:
 
-\small
+\scriptsize
 
 ```{r}
 new_node <- function(data,childl=NULL,childr=NULL){
   structure(list(data=data,childl=childl,childr=childr),
-                  class="node")
+                class="node")
 }
 nn <- new_node(data=NULL) # Note: data should be a region object
 s3_class(nn)
+```
+
+In MARS
+```{r,eval=F}
+mars <- function(formula,data,control=mars.control()) {
+  ...
+  fwd <- fwd_stepwise(y,x,control)
+  bwd <- bwd_stepwise(fwd,control)
+  fit <- lm(...)
+  out <- c(list(call=cc,formula=formula,y=y,
+                B=bwd$B,Bfuncs=bwd$Bfuncs,
+                x_names=x_names),fit)
+  class(out) <- c("mars",class(fit))
+  out
+}
+
 ```
 
 ## Removing the class attribute
@@ -218,7 +244,7 @@ the separator between generic and class names in naming methods.
 
 * Constructor: Make a function named
 `new_myclass()` to create an object with the correct 
-structure.
+structure. 
 * Validator: Make a function named `validate_myclass()` that
 checks that the object's data makes sense, stops if not,
 and otherwise returns the object.
@@ -228,6 +254,15 @@ can use to create instances of the class.
 * Exercise (see week 7 exercises): 
 Create validator and helper functions for the
 node class example on the previous slide.
+
+
+## Three functions to create your own class 
+
+The text recommends you provide three functions to create your own class
+
+1. A low-level **constructor**,`new_myclass()`, that efficiently creates new objects with the correct structure.
+2. A **validator**, `validate_myclass()`, that performs more computationaly expensive checks to ensure that the object has correct values.
+3. A user-friendly **helper**, `myclass()`, that provides a conveinent way for others to create objects of your class.
 
 ## Constructors
 
@@ -306,15 +341,48 @@ difftime <- function(x = double(), units = "secs") {
 }
 ```
 
+## Example: class mars.control
+
+\scriptsize
+
+```{r,eval=F}
+# constructor, validator and helper for class mars.control
+new_mars.control <- function(control) {
+  structure(control,class="mars.control")}
+
+validate_mars.control <- function(control) {
+  stopifnot(is.integer(control$Mmax),is.numeric(control$d),
+            is.logical(control$trace))
+  if(control$Mmax < 2) {
+    warning("Mmax must be >= 2; Reset it to 2")
+    control$Mmax <- 2}
+  if(control$Mmax %% 2 > 0) {
+    control$Mmax <- 2*ceiling(control$Mmax/2)
+    warning("Mmax should be an even integer. Reset it to ",control$Mmax)}
+  control
+}
+
+# Constructor for `mars.control` objects
+mars.control <- function(Mmax=2,d=3,trace=FALSE) {
+  Mmax <- as.integer(Mmax)
+  control <- list(Mmax=Mmax,d=d,trace=trace)
+  control <- validate_mars.control(control)
+  new_mars.control(control)
+  }
+# mars <- function(formula,data,control=mars.control(Mmax=4)) {...}
+```
 
 ## S3 generic functions and methods
 
+* The job of S3 generic is to perform method dispatch, i.e. finding the
+specific implementation for a class. Method dispatch is performed by `UseMethod()`.
 * A generic function, like print, defines an 
 interface (arguments) and finds an appropriate method
     * the method is an implementation specific 
     to the object class
     * finding an appropriate method is method dispatch
 
+\small
 ```{r}
 print
 ftype(print)
@@ -324,6 +392,7 @@ ftype(print.factor)
 
 ## Method dispatch: `UseMethod()`
 
+* `UseMethod()` takes two arguments: the name of the generic function (required), and the argument to use for method dispatch (optional). If you omit the second argument, it will dispatch based on the first argument, which is almost always what is desired
 * In simple cases, `UseMethod()` looks for  `generic.class()`,
 and falls back on `generic.default()`. 
     * If neither exist, it throws an error.
