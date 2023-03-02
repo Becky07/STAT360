@@ -1,5 +1,5 @@
 ---
-title: "apply(), lapply(), sapply(), tapply() Function in R with Examples"
+title: "Apply function family in R with Examples"
 author: "Becky Lin"
 date: "2023-02-13"
 output: pdf_document
@@ -11,13 +11,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-This tutorial aims at introducing `apply()` function collection which can be viewed as a substitute to the loop in R. 
+Apply functions are a family of functions in base R which allow you to repetitively perform an action on multiple chunks of data. An apply function is essentially a loop, but run faster than loops and often require less code.
+
+The apply functions that this document will address are apply, lapply, sapply, tapply, vapply, mapply and mclapply. There are so many different apply functions because they are meant to operate on different types of data.
+
 
 The apply() function is the basic model of the family of apply functions in R, which includes specific functions like lapply(), sapply(), tapply(), mapply(), vapply(), rapply(), bapply(), eapply(), and others. All of these functions allow us to iterate over a data structure such as a list, a matrix, an array, a DataFrame, or a selected slice of a given data structure — and perform the same operation at each element.
 
 
 
-## apply() function 
+# apply() function 
 
 apply() takes Data frame or matrix as an input and gives output in vector, list or array. Apply function in R is primarily used to avoid explicit uses of loop constructs. It is the most basic of all collections can be used over a matrice.
 
@@ -49,7 +52,7 @@ apply(data, 2, range)
 ```
 
 
-## lapply() function
+# lapply() function
 
 lappy() returns a list of the similar length as input list object, each element of which is the result of applying FUN to the corresponding element of list. The "l" in lappy() stands for *list*. The difference between lapply() and apply() lies between the output return. The output of lapply() is a list. lapply() can be used for other objects like data frames and lists.
 
@@ -73,8 +76,187 @@ data2 = matrix(c(1:4),nrow=2,ncol=2)
 lapply(data2,function(x) x+1)
 ```
 
-## sapply() function
+# sapply() function
+
+* sapply() function takes list, vector or data frame as input and gives output in vector or matrix. 
+* sapply() is useful for operations on list objects and returns a list object of same length of original set. 
+* sapply() and lapply() do the same job but sapply() returns a vector while lapply() returns a list. 
+* In general, sapply() is more efficient than lapply() in the output returned because sapply() store values directly into a vector. 
+
+```{r, eval=F}
+sapply(X, FUN)
+```
+
+Arguments:
+
+  - X: a vector or list or vector or data frame. 
+  - FUN: function applied to each element of X.
+
+**Example**
+```{r}
+dt <- cars
+lmn_cars <- lapply(dt, mean)
+smn_cars <- sapply(dt, mean)
+lmn_cars
+smn_cars
+
+# FUN: home-made function
+avg <- function(x) {  
+  ( min(x) + max(x) ) / 2}
+fcars <- sapply(dt, avg)
+fcars
+```
+
+**Example 2: Slicing vector **
+
+We can use lapply() or sapply() interchangeable to slice a data frame. We create a function, below_average(), that takes a vector of numerical values and returns a vector that only contains the values that are strictly above the average. We compare both results with the identical() function.
+
+```{r}
+below_ave <- function(x) {  
+    ave <- mean(x) 
+    return(x[x > ave])
+}
+dt_s<- sapply(dt, below_ave)
+dt_l<- lapply(dt, below_ave)
+identical(dt_s, dt_l)
+c(length(dt_s$speed),length(dt_s$dist) )
+```
 
 
+### Summarize the difference between apply(), sapply() and lapply()
 
 
+|Function| Arguments| Objective| Input| Output| 
+|-------|-------------------------|-----------------------------------------|-------------------|--------------|
+|apply| apply(X, MARGIN, FUN) | Apply a function to the rows or columns or both| Data frame or matrix | vector, list, array|
+|lapply| lapply(X, FUN) | Apply a function to all the elements of the input | list, vector or data frame | list|
+|sapply| sapply(X, FUN) | Apply a function to all the elements of the input | list, vector or data frame | vector or matrix| 
+
+
+# tapply() function
+
+* tapply() computes a measure (mean, median, min, max, etc..) or a function for each factor variable in a vector
+* tapply() is a very useful function that lets you create a subset of a vector and then apply some functions to each of the subset.
+
+
+```{r, eval=F}
+tapply(X, INDEX, FUN = NULL)
+```
+
+Arguments
+
+- X: an object, usually a vector
+- INDEX: a list containing factor
+- FUN: function applied to each element of X
+
+Part of the job of a data scientist or researchers is to compute summaries of variables. For instance, measure the average or group data based on a characteristic. Most of the data are grouped by ID, city, countries, and so on. Summarizing over group reveals more interesting patterns.
+
+To understand how it works, let’s use the iris dataset. This dataset is very famous in the world of machine learning. The purpose of this dataset is to predict the class of each of the three flower species: Sepal, Versicolor, Virginica. The dataset collects information for each species about their length and width.
+
+```{r}
+data(iris)
+# find the median Sepal width of each species
+tapply(iris$Sepal.Width, iris$Species, median)
+```
+
+
+# vapply()
+
+* vapply() is similar to sapply(), but has a pre-specified type of return value, so it can be safer (and sometimes faster) to use.
+
+```{r, eval=F}
+vapply(X, FUN, FUN.VALUE)
+```
+
+Arguments:
+
+- X: a vector-object object
+- FUN: function applied to each element of X
+- FUN.VALUE is where you specify the type of data you are expecting. I am expecting each item in the list to return a single numeric value, so FUN.VALUE = numeric(1).
+
+```{r}
+# input is a vector
+vec <- c(1:10)
+vapply(vec, sum, numeric(1))
+
+# input is a list
+A<-c(1:9)
+B<-c(1:12)
+C<-c(1:3)
+my.lst<-list(A,B,C)
+vapply(my.lst, sum, numeric(1))
+my.lst$C<-c("x", "y", "z")
+# the following vapply() fails as the expected 
+# output type is not numeric for the C element
+# vapply(lst, min, numeric(1))
+```
+
+
+# mapply()
+
+* mapply() in R can be used to apply a functoin to multiple list or vector arguments.
+
+```{r,eval=F}
+mapply(FUN, ..., MoreArgs=NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
+```
+
+- FUN: the function to apply
+- ...: arguments to vectorize over
+- MoreArgs: a list of other arguments to FUN
+- SIMPLIFY: whether or not to reduce the result to a vector
+- USE.NAMES: whether or not to use names if the first... argument has names.
+
+**Example 1: to create a matrix**
+
+```{r}
+mapply(rep, 1:3, times=5)
+# compare to method below
+matrix(c(rep(1, 5), rep(2, 5), rep(3, 5)), ncol=3)
+```
+
+**Example 2: to multipy corresponding elements in vectors**
+
+```{r}
+vec1 <- c(1, 2, 3, 4)
+vec2 <- c(2, 4, 6, 8)
+vec3 <- c(3, 6, 9, 12)
+
+#find max value of each corresponding elements in vectors 
+mapply(function(val1, val2, val3) val1*val2*val3, vec1, vec2, vec3)
+vec1+vec2+vec3
+```
+
+# mclapply(): Parallel versions of lapply()
+
+* mclapply(): Parallel versions of lapply().
+* mclapply() returns  a list of the same length as X, each element of which is the result of applying FUN to the corresponding element of X.
+* mclapply() relies on forking and hence is not available on Windows unless mc.cores = 1. mcmapply is a parallelized version of mapply, and mcMap corresponds to Map.
+
+```{r,eval=F}
+mclapply(X, FUN, ...,
+         mc.preschedule = TRUE, mc.set.seed = TRUE,
+         mc.silent = FALSE, mc.cores = getOption("mc.cores", 2L),
+         mc.cleanup = TRUE, mc.allow.recursive = TRUE)
+```
+
+- X: a vector (atomic or list) or an expressions vector. Other objects (including classed objects) will be coerced by as.list.
+- FUN: the function to be applied to (mclapply) each element of X or (mcmapply) in parallel to.
+- mc.cores: the number of cores to use, i.e. at most how many child processes will be run simultaneously. The option is initialized from environment variable MC_CORES if set. Must be at least one, and parallelization requires at least two cores.
+
+**Example: Parallel Streams of random numbers**
+
+To get random numbers in parallel, we need to use a special random number generator (RNG) designed for parallelization.
+
+```{r}
+library(parallel)
+ncores <- detectCores()
+ncores
+set.seed(42)
+mclapply(1:ncores, function(x) rnorm(5), mc.cores = ncores)
+```
+
+
+## Reference
+
+1. \url{https://www.guru99.com/r-apply-sapply-tapply.html}
+2. \url{https://www.stat.umn.edu/geyer/8054/notes/parallel.html}

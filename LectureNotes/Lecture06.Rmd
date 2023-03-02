@@ -251,9 +251,9 @@ we built a dataset of $500 \times 1000$ observations.
 \small
 
 ```{r}
-# profvis({ bigd1() })
-# profvis({ bigd2() })
-# profvis({ bigd3() })
+#profvis({ bigd1() })
+#profvis({ bigd2() })
+#profvis({ bigd3() })
 ```
 
 ## Notes on memory profiling
