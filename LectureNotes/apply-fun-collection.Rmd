@@ -136,6 +136,7 @@ c(length(dt_s$speed),length(dt_s$dist) )
 # tapply() function
 
 * tapply() computes a measure (mean, median, min, max, etc..) or a function for each factor variable in a vector
+* To modify the outplut class to **list**, simply set the **simplify** argument to FALSE.
 * tapply() is a very useful function that lets you create a subset of a vector and then apply some functions to each of the subset.
 
 
@@ -157,6 +158,10 @@ To understand how it works, let’s use the iris dataset. This dataset is very f
 data(iris)
 # find the median Sepal width of each species
 tapply(iris$Sepal.Width, iris$Species, median)
+tapply(iris$Sepal.Width, iris$Species, mean,simplify=FALSE)
+# if data frame contains some NA values in its column,
+# specify na.rm to remove NA values.
+# tapply(iris$Sepal.Width, iris$Species, mean,rm.na=TRUE)
 ```
 
 
