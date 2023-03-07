@@ -374,6 +374,7 @@ setClass("Employee",
   )
 )
 emily <- new("Employee",name="Emily",boss=new("Person",name="Catherine"))
+is(emily)
 is(emily,"Employee")
 is(emily,"Person")
 ```
