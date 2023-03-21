@@ -403,7 +403,7 @@ is true of all of those used in this lecture.
 * In R, lists can be thought of as generic containers that
 generalize atomic vectors to hold arbitrary data structures.
 
-![Lists as generic containers](list.png){width=40%}
+![Lists as generic containers](img/list.png){width=40%}
 
 * In R, list elements can be accessed by index, 
 in the same way as vectors (in fact, we 

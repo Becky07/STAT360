@@ -13,6 +13,7 @@ using namespace Rcpp;
 
 // ** Prefix each function you want R to see with:
 
+// two slash are the comment in c++
 // [[Rcpp::export]]
 NumericVector timesTwo(NumericVector x) {
   return x * 2;
